@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ListManager.ViewModels;
+using ListManager.Views;
+using Microsoft.Extensions.Logging;
 
 namespace ListManager
 {
@@ -16,8 +18,10 @@ namespace ListManager
                 });
 
 #if DEBUG
-		builder.Logging.AddDebug();
+		    builder.Logging.AddDebug();
 #endif
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<MainViewModel>();
 
             return builder.Build();
         }
