@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using ListManager.Services;
+using System.Windows.Input;
 
 // Пространство имён моделей приложения
 namespace ListManager.ViewModels;
@@ -8,6 +9,9 @@ namespace ListManager.ViewModels;
 /// </summary>
 public class MainViewModel : ViewModelBase
 {
+    // Диалоговый сервис
+    private readonly IDialogService dialogService;
+
     // Счётчик нажатий
     private int count;
 
@@ -31,11 +35,18 @@ public class MainViewModel : ViewModelBase
     /// <summary>
     /// Конструктор модели представления главной страницы
     /// </summary>
-    public MainViewModel()
+    public MainViewModel(IDialogService dialogService)
     {
+        // Сохранить диалоговый сервис
+        this.dialogService = dialogService;
+
+
         // Определить действие при нажатии на кнопку
-        ClickCommand = new Command(() =>
+        ClickCommand = new Command(async () =>
         {
+            // Выдать сообщение на экран
+            await dialogService.DisplayAlert("Alert", "The button is clicked!", "Ok");
+
             // Увеличить счётчик надатий
             count++;
 
