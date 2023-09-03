@@ -40,7 +40,6 @@ public class MainViewModel : ViewModelBase
         // Сохранить диалоговый сервис
         this.dialogService = dialogService;
 
-
         // Определить действие при нажатии на кнопку
         ClickCommand = new Command(async () =>
         {
