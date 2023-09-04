@@ -1,21 +1,23 @@
 ﻿using ListManager.Services;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
+// пространство имён моделей представления
 namespace ListManager.ViewModels;
 
-[QueryProperty(nameof(Param1), "param1")]
-public class Page2ViewModel : ViewModelBase
+/// <summary>
+/// Модель представления страницы2.
+/// Базируется на базовом классе моделей представления.
+/// Реализует интерфейс IQueryAttributable для получения аргументов.
+/// </summary>
+public class Page2ViewModel : ViewModelBase, IQueryAttributable
 {
     // Сервис навигации
     private readonly INavigationService navigationService;
 
+    // Поле для свойства Param1
     private string? _param1 = null;
+    /// <summary>
+    /// Свойство, получаеще значение параметра param1
+    /// </summary>
     public string? Param1
     {
         get => _param1;
@@ -24,40 +26,37 @@ public class Page2ViewModel : ViewModelBase
             SetProperty(ref _param1, value);
         }
     }
+    
+    /// <summary>
+    ///  Команда возврата к предыдущей стрвнице
+    /// </summary>
     public Command BackCommand { get; }
 
-    public bool IsBackEnabled => navigationService.CanNavigateBack();
-
     /// <summary>
-    /// Свойство возвращает грубину стэка навигации.
+    /// Конструктор класса.
     /// </summary>
-    public string NavStackCount => Shell.Current.Navigation.NavigationStack.Count.ToString();
-
-    public ICommand RenewStackCountCommand { get; }
+    /// <param name="navigationService">Сервис навигации</param>
     public Page2ViewModel(INavigationService navigationService)
     {
+        // Сохранить сервис навигации
         this.navigationService = navigationService;
 
-        // Выдать отладочное сообщение
-        Debug.WriteLine($"===== an instance of the class has been created: {nameof(Page2ViewModel)}");
-
-        BackCommand = new Command(
-            execute: async () =>
+        // Определить команду возврата к предыдущей странице
+        BackCommand = new Command(async () =>
             {
                 await navigationService.NavigateBackAsync();
-            },
-            canExecute: () =>
-            {
-                bool res = navigationService.CanNavigateBack();
-                return res;
             }
         );
-        RenewStackCountCommand = new Command(() =>
-        {
-            OnPropertyChanged(nameof(NavStackCount));
-            OnPropertyChanged(nameof(IsBackEnabled));
-            ((Command)BackCommand).ChangeCanExecute();
-        });
+    }
 
+    /// <summary>
+    /// Получение переданных аргументов
+    /// </summary>
+    /// <param name="query">Словарь аргументов</param>
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        // Пометить в свойство Param1 аргумент параметра с именем param1
+        // преобразованный в строку.
+        Param1 = query["param1"] as string;
     }
 }
