@@ -23,7 +23,7 @@ namespace ListManager
 #endif
             builder.Services.AddSingleton<IDialogService, DialogService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
-            builder.Services.AddPage<MainPage,MainViewModel>("MainPage");
+            builder.Services.AddPage<MainPage,MainViewModel>();
             builder.Services.AddPage<Page1View, Page1ViewModel>("Page1");
             builder.Services.AddPage<Page2View, Page2ViewModel>("Page2");
 
