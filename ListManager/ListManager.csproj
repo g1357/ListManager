@@ -107,4 +107,13 @@
 	  <Folder Include="Behaviors\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\Page1View.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Page2View.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

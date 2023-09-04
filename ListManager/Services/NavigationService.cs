@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-// Пространство имён сервисов
+﻿// Пространство имён сервисов
 namespace ListManager.Services;
 
 /// <summary>
@@ -44,8 +38,10 @@ public class NavigationService : INavigationService
     public Task NavigateToAsync(string route, bool animate,
         IDictionary<string, object>? routeParameters = null)
     {
+        // Преобразовать путь в состояний навигации
         var shellNavigation = new ShellNavigationState(route);
 
+        // В зависимости от наличия параметров выполнить переход.
         return routeParameters != null
             ? Shell.Current.GoToAsync(shellNavigation, animate, routeParameters)
             : Shell.Current.GoToAsync(shellNavigation, animate);
@@ -67,4 +63,14 @@ public class NavigationService : INavigationService
     public Task NavigateBackAsync(IDictionary<string, object>? parameters = null) => 
         Shell.Current.GoToAsync("..", parameters);
 
+    /// <summary>
+    /// Проверка возможности перехода к предыдущей страницы=е
+    /// </summary>
+    /// <returns>true, если возврат возможен, иначе - афдыу</returns>
+    public bool CanNavigateBack()
+    {
+        // Проверить, что в стеке навигации больше одного элемента.
+        // Один элемент с индексом 0 служебный.
+        return Shell.Current.Navigation.NavigationStack.Count > 1;
+    }
 }

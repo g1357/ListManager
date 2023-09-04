@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ListManager.Views.Page2View"
+             Title="Page2View">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}" 
+            IsEnabled="{Binding IsBackEnabled}"/>
+    </Shell.BackButtonBehavior>
+            
+    <VerticalStackLayout>
+        <Label Text="Demo Page2!" FontSize="Title"
+            VerticalOptions="Center" HorizontalOptions="Center" 
+            Margin="0,10,0,20"/>
+
+        <Label Text="Argument 'param1' value" FontAttributes="Bold"
+            HorizontalOptions="Center"/>
+        <Label Text="{Binding Param1}" HorizontalOptions="Center"/>
+
+        <HorizontalStackLayout HorizontalOptions="Center" Margin="0,30,0,0">
+            <Label Text="Parameter for Page2:" VerticalTextAlignment="Center" />
+            <Entry Text="{Binding Param}" VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+        <Button Text="Back to previouse page" HorizontalOptions="Center"
+            Command="{Binding BackCommand}" />
+        <Label Text="{Binding NavStackCount, StringFormat='Navigation Stack Count: {0}'}"
+            HorizontalOptions="Center" Margin="0,20,0,0"/>
+        <Button Text="Renew Navigatint Stack Count" HorizontalOptions="Center"
+            Command="{Binding RenewStackCountCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

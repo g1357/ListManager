@@ -6,9 +6,18 @@
     xmlns:views="clr-namespace:ListManager.Views"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />
-
+    <Tab Title="Pages">
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate views:MainPage}"
+            />
+        <ShellContent
+            Title="Page1"
+            ContentTemplate="{DataTemplate views:Page1View}"
+            />
+        <ShellContent
+            Title="Page2"
+            ContentTemplate="{DataTemplate views:Page2View}"
+            />
+    </Tab>
 </Shell>

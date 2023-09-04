@@ -33,7 +33,16 @@
                 SemanticProperties.Hint="Counts the number of times you click"
                 Command="{Binding ClickCommand}" 
                 HorizontalOptions="Center" />
-
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="Parameter for Page1:"  VerticalTextAlignment="Center" />
+                <Entry Text="{Binding Param}" VerticalTextAlignment="Center" />
+            </HorizontalStackLayout>
+            <Button Text="Navigate to Page 1" HorizontalOptions="Center"
+                Command="{Binding NavigateCommand}" />
+            <Label Text="{Binding NavStackCount, StringFormat='Navigation Stack Count: {0}'}"
+                HorizontalOptions="Center" Margin="0,20,0,0"/>
+            <Button Text="Renew Navigatint Stack Count" HorizontalOptions="Center"
+                Command="{Binding RenewStackCountCommand}" />
         </VerticalStackLayout>
     </ScrollView>
 
