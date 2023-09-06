@@ -11,8 +11,8 @@
             <Label Text="Hello, World!" FontSize="32"
                 HorizontalOptions="Center"
                 SemanticProperties.HeadingLevel="Level1" />
-            <Label Text="Welcome to .NET Multi-platform App UI"
-                FontSize="18"  HorizontalOptions="Center"
+            <Label Text="Welcome to .NET Multi-platform App UI" 
+                FontSize="18"  HorizontalOptions="Center" 
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
             <Button Text="{Binding BtnText}" Command="{Binding ClickCommand}" 

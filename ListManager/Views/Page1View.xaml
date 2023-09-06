@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:ListManager.Behaviors"
              x:Class="ListManager.Views.Page1View"
              Title="Page1View">
     <VerticalStackLayout>
@@ -13,7 +14,14 @@
             <Entry Text="{Binding Param}" VerticalTextAlignment="Center" 
                 WidthRequest="100" Placeholder="value"/>
         </HorizontalStackLayout>
-        <Button Text="Navigate to Page 2" HorizontalOptions="Center"
+        <Button Text="Navigate to Page 2 (command)" HorizontalOptions="Center"
             Command="{Binding NavigateCommand}" />
+        <Button Text="Navigate to Page 2 (behavior)" HorizontalOptions="Center"
+            IsEnabled="{Binding CanNavigate}">
+            <Button.Behaviors>
+                <behaviors:EventToCommandBehavior EventName="Clicked"
+                    Command="{Binding NavigateCommand}" />
+            </Button.Behaviors>
+        </Button>
     </VerticalStackLayout>
 </ContentPage>

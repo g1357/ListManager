@@ -7,11 +7,11 @@ public partial class Page1View : ContentPage
 {
 	public Page1View(Page1ViewModel viewModel)
 	{
+        BindingContext = viewModel;
         // Выдать отладочное сообщение
         Debug.WriteLine($"===== an instance of the class has been created: {nameof(Page1View)}");
 
         InitializeComponent();
-		BindingContext = viewModel;
 	}
     protected override void OnAppearing()
     {

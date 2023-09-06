@@ -44,6 +44,7 @@ public class Page1ViewModel : ViewModelBase
             {
                 // то перевычислить возможность выполнения команды NavigateCommand
                 ((Command)NavigateCommand).ChangeCanExecute();
+                OnPropertyChanged(nameof(CanNavigate));
             }
         }
     }
@@ -52,6 +53,9 @@ public class Page1ViewModel : ViewModelBase
     /// Свойство для команды
     /// </summary>
     public ICommand NavigateCommand { get; }
+
+    // Свойство возможности навмгации
+    public bool CanNavigate => !string.IsNullOrEmpty(_param);
 
     /// <summary>
     /// Конструктор класса
@@ -76,7 +80,7 @@ public class Page1ViewModel : ViewModelBase
             },
             // Проверка возможности выполнения команды
             // Если поле параметра не пустое, то команду можно выполнить
-            canExecute: () => !string.IsNullOrEmpty(_param)
+            canExecute: () => CanNavigate
         );
     }
 }
