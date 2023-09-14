@@ -31,66 +31,6 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
-	  <ApplicationId>com.gbd.listmanager</ApplicationId>
-	  <ApplicationVersion>2</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.3.02</ApplicationDisplayVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
-	  <ApplicationId>com.gbd.listmanager</ApplicationId>
-	  <ApplicationVersion>2</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.3.02</ApplicationDisplayVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
-	  <ApplicationId>com.gbd.listmanager</ApplicationId>
-	  <ApplicationVersion>2</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.3.02</ApplicationDisplayVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationId>com.gbd.listmanager</ApplicationId>
-	  <ApplicationVersion>2</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.3.02</ApplicationDisplayVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
-	  <ApplicationId>com.gbd.listmanager</ApplicationId>
-	  <ApplicationVersion>2</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.3.02</ApplicationDisplayVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
-	  <ApplicationId>com.gbd.listmanager</ApplicationId>
-	  <ApplicationVersion>2</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.3.02</ApplicationDisplayVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-maccatalyst|AnyCPU'">
-	  <ApplicationId>com.gbd.listmanager</ApplicationId>
-	  <ApplicationVersion>2</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.3.02</ApplicationDisplayVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationId>com.gbd.mauiapp3</ApplicationId>
-	  <ApplicationVersion>2</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.3.02</ApplicationDisplayVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|AnyCPU'">
-	  <ApplicationId>com.hbd.listmanager</ApplicationId>
-	  <ApplicationVersion>2</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.3.02</ApplicationDisplayVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|AnyCPU'">
-	  <ApplicationId>com.hbd.listmanager</ApplicationId>
-	  <ApplicationVersion>2</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.3.02</ApplicationDisplayVersion>
-	</PropertyGroup>
-
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -111,20 +51,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Models\" />
-	  <Folder Include="Converters\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Views\Page1View.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Page2View.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
