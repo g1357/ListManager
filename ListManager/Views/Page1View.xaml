@@ -23,5 +23,8 @@
                     Command="{Binding NavigateCommand}" />
             </Button.Behaviors>
         </Button>
+        <Button Text="Data Store Operations" HorizontalOptions="Center"
+            Margin="0,30,0,0"
+            Command="{Binding DataStoreCommand}" />
     </VerticalStackLayout>
 </ContentPage>

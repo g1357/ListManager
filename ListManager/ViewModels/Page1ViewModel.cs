@@ -1,4 +1,5 @@
-﻿using ListManager.Services;
+﻿using ListManager.Models;
+using ListManager.Services;
 using System.Windows.Input;
 
 // Пространство имён моделей представления
@@ -54,6 +55,8 @@ public class Page1ViewModel : ViewModelBase
     /// </summary>
     public ICommand NavigateCommand { get; }
 
+    public ICommand DataStoreCommand { get; }
+
     // Свойство возможности навмгации
     public bool CanNavigate => !string.IsNullOrEmpty(_param);
 
@@ -82,5 +85,13 @@ public class Page1ViewModel : ViewModelBase
             // Если поле параметра не пустое, то команду можно выполнить
             canExecute: () => CanNavigate
         );
+
+        DataStoreCommand = new Command(async () =>
+        {
+            var data = new DataService();
+            var flag = await data.RestoreData();
+            flag =  await data.SaveData();
+            flag = await data.RestoreData();
+        });
     }
 }
