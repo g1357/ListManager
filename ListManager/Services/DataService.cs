@@ -1,6 +1,5 @@
 ﻿using ListManager.Models;
 using System.Text.Json;
-using System.Xml.Linq;
 
 // Пространство имён моделей данных
 namespace ListManager.Services;
@@ -15,6 +14,9 @@ public class DataService : IDataService
 
     // Путь к файлу данных
     private readonly string filePath = Path.Combine(dir, fileName);
+
+    // Признак изменения данных (требуется их сохранение)
+    private bool dataChanged = false;
 
     /// <summary>
     /// Данные нашего приложения
@@ -41,17 +43,19 @@ public class DataService : IDataService
     /// </summary>
     private void InitListKinds()
     {
+        // Если типы списков не заданы, то
         if (Data.ListKinds == null)
         {
+            // Создать список типов списков
             Data.ListKinds = new List<ListKind>
             {
-                new ListKind
+                new ListKind // Создать тип списка: Список покупок
                 {
                     Id = 1,
                     Name = "Список покупок",
                     Description = "Список, содержит товары, которые необходимо купить"
                 },
-                new ListKind
+                new ListKind // Создать тип списка: Список дел
                 {
                     Id = 2,
                     Name = "Список дел",
@@ -68,6 +72,7 @@ public class DataService : IDataService
     /// <returns>Перечень типов списков</returns>
     public IEnumerable<ListKind> GetListTypes()
     {
+        // Весрнуть перечень типов списков, поддерживаемых приложением
         return Data.ListKinds;
     }
 
@@ -77,6 +82,7 @@ public class DataService : IDataService
     /// <returns>Перечень списков покупок</returns>
     public IEnumerable<ShoppingList> GetShoppingLists()
     {
+        // Вернуть перечень списков покупок
         return Data.ShoppingLists;
     }
 
@@ -91,13 +97,16 @@ public class DataService : IDataService
         // Создать новый список покупок
         var list = new ShoppingList
         {
-            ListKindId = 1,
-            Id = NextShoppingListId,
-            Name = name, 
-            Description = description 
+            ListKindId = 1, // Тип списка: Список покупок
+            Id = NextShoppingListId, // Идентификатор списка покупок
+            Name = name, // Наименование списка покупок
+            Description = description // Краткое описание списка покупок
         };
         // Добавить список покупок к пепечню списков покупок
         Data.ShoppingLists.Add(list);
+        // Установить признак изменения данных
+        dataChanged = true;
+        // Вернуть идентификатор созданного списка покупок
         return list.Id;
     }
 
@@ -108,14 +117,23 @@ public class DataService : IDataService
     /// <returns>Признак успешности удаления списка покупок</returns>
     public bool DeleteShoppingList(int listId)
     {
+        // Получить список по его идентификатору или null
         var item = Data.ShoppingLists.FirstOrDefault(x => x.Id == listId);  
+        // Если список с заданым идентификатором не найден, то
         if (item == null)
         {
+            // Вернуть неуспешное выполнение опрерации
             return false;
         }
         else
         {
+            // Удалить найденный элемент из перечня списков покупок
             Data.ShoppingLists.Remove(item);
+            // Удалить продукты из заданного списка покупок
+            ClearShoppingList(listId);
+            // Установить признак изменения данных
+            dataChanged = true;
+            // Вернуть успешность выполнения операции
             return true;
         }
     }
@@ -150,9 +168,22 @@ public class DataService : IDataService
         }
         else // Если элементнайдет, то
         {
-            // Обновить значения
-            item.Name = shoppingList.Name;
-            item.Description = shoppingList.Description;
+            // Если наименование изменилось, то
+            if (item.Name != shoppingList.Name)
+            {
+                // Установить новое наименование списка
+                item.Name = shoppingList.Name;
+                // Установить признак изменения данных
+                dataChanged = true;
+            }
+            // Если краткое описание изменилось, то
+            if (item.Description != shoppingList.Description)
+            {
+                // Установить новове краткое описание
+                item.Description = shoppingList.Description;
+                // Установить признак изменения данных
+                dataChanged = true;
+            }
             // Вернуть истину - успешное выполнение операции
             return true;
         }
@@ -167,11 +198,17 @@ public class DataService : IDataService
     {
         // Получить список всех товаров списка покупок с заданным идентификатором
         var list = Data.ProductList.Where(prod => prod.ListId == listId);
-        // Для каждого элеимента списка
-        foreach (var item in list)
+        // Если товары есть, то
+        if (list != null)
         {
-            // Удалить элемент из перечня продуктов
-            Data.ProductList.Remove(item);
+            // Для каждого элеимента списка
+            foreach (var item in list)
+            {
+                // Удалить элемент из перечня продуктов
+                Data.ProductList.Remove(item);
+            }
+            // Установить признак изменения данных
+            dataChanged = true;
         }
         // Вернуть истину
         return true;
@@ -210,6 +247,8 @@ public class DataService : IDataService
         };
         // Добавить продукт в общий список продуктов
         Data.ProductList.Add(prod);
+        // Установить признак изменения данных
+        dataChanged = true;
         // Вернуть истину
         return true;
     }
@@ -233,6 +272,8 @@ public class DataService : IDataService
         {
             // Удалить продукт из общего списка продуктов
             Data.ProductList.Remove(item);
+            // Установить признак изменения данных
+            dataChanged = true;
             // Вернуть истину
             return true;
         }
@@ -265,34 +306,93 @@ public class DataService : IDataService
             // Вернуть ложь - неудачное выполнение опрерации
             return false;
         }
-        else // Если элементнайдет, то
+        else // Если элемент найдет, то
         {
-            // Обновить значения
-            item.Name = product.Name;
-            item.Description = product.Description;
-            item.Qty = product.Qty;
-            item.Marked = product.Marked;
+            // Если наименование изменилось, то
+            if (item.Name != product.Name)
+            {
+                // Установить новое значение
+                item.Name = product.Name;
+                // Установить признак изменения данных
+                dataChanged = true;
+            }
+            // Если краткое описание изменилось, то
+            if (item.Description != product.Description)
+            {
+                // Установить новое значение
+                item.Description = product.Description;
+                // Установить признак изменения данных
+                dataChanged = true;
+            }
+            if (item.Qty != product.Qty)
+            {
+                item.Qty = product.Qty;
+                // Установить признак изменения данных
+                dataChanged = true;
+            }
+            if (item.Marked != product.Marked)
+            {
+                item.Marked = product.Marked;
+                // Установить признак изменения данных
+                dataChanged = true;
+            }
             // Вернуть истину - успешное выполнение операции
             return true;
         }
     }
     #endregion Реализация интерфейса IDataService
 
+    /// <summary>
+    /// Обновить значение, если оно изменилось 
+    /// и установить признак изменения данных
+    /// </summary>
+    /// <typeparam name="T">Тип аргументов</typeparam>
+    /// <param name="value">Старое значение</param>
+    /// <param name="newValue">Новое значение</param>
+    private void UpdateValue<T>(T value, T newValue)
+    {
+        // Если значение не задано, то вернуться
+        if (value == null) return;
+        // Если значение изменилось, то
+        if (!value.Equals(newValue))
+        {
+            // Установить новое значение
+            value = newValue;
+            // Установить признак изменения данных
+            dataChanged = true;
+        }
+    }
+
+    /// <summary>
+    /// Локально охранить данные приложения
+    /// </summary>
+    /// <returns>Признак успешности сохранения данных</returns>
     public async Task<bool> SaveData()
     {
-        try
+        // Если данные не изменяль, то выйти
+        if (!dataChanged) return true;
+        try // Блок с отслеживанием возникновения исключений
         {
-            using FileStream outputStream = System.IO.File.OpenWrite(filePath);
+            // Открыти заданный файл для записи и создать поток
+            using FileStream outputStream = File.OpenWrite(filePath);
+            // Создать "записыватель" потока
             using StreamWriter streamWriter = new StreamWriter(outputStream);
 
+            // Сериализовать данные приложения в строку в формате JSON
             string json = JsonSerializer.Serialize<DataStore>(Data);
 
+            // Записать данные в файл
             await streamWriter.WriteAsync(json);
+            // Сросить признак изменения данных
+            dataChanged = false;
+            // Вернуть признак успешности восстановления данных
             return true;
         }
-        catch (Exception ex)
+        catch (Exception ex) // если возникло исключение, то
         {
+            // Выдать сообщение рб ошибке
             Console.Write(ex.Message);
+            // Вернуть признак неуспешности восстановления данных
             return false;
         }
     }
@@ -303,33 +403,45 @@ public class DataService : IDataService
     /// <returns>Признак успешного восстановления данных</returns>
     public async Task<bool> RestoreData()
     {
-        try
+        try // Блок с отслеживанием возникновения исключений
         {
             // Если файл существует, то
             if (File.Exists(filePath))
             {
+                // Открыти заданный файл для чтения и создать поток
                 using Stream fileStream = File.OpenRead(filePath);
+                // Создать считыватель потока
                 using StreamReader reader = new StreamReader(fileStream);
+                // Считать все текстовые данные из файла в строку
                 var json = await reader.ReadToEndAsync();
 
+                // Десериализовать JSON в заданный объект
                 var data = JsonSerializer.Deserialize<DataStore>(json);
+                // Если данные успешно десериализовались в объект, то
                 if (data != null)
                 {
+                    // Сохранить считанные данные в локальную переменную
                     Data = data;
+                    // Очистить рабочую переменную
                     data = null;
                 }
-                return true;
             }
             else // Если файл отсутствует, то
             {
+                // Заполнить локальную переменную, хранящую данные,
+                // демонстрационными данными
                 DataSeed();
-                //InitListKinds();
-                return true;
             }
+            // Сросить признак изменения данных
+            dataChanged = false;
+            // Вернуть признак успешности восстановления данных
+            return true;
         }
-        catch (Exception ex)
+        catch (Exception ex) // если возникло исключение, то
         {
+            // Выдать сообщение рб ошибке
             Console.Write(ex.Message);
+            // Вернуть признак неуспешности восстановления данных
             return false;
         }
     }
@@ -339,34 +451,41 @@ public class DataService : IDataService
     /// </summary>
     public void DataSeed()
     {
+        // Создать объект для хранилища данных
         Data = new DataStore();
+        // Создать новый список покупок
         var listId_1 = CreateShoppingList("МЕТРО", "Еженедельные покупки в МЕТРО");
-        AddProduct(listId_1, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_1, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_1, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_1, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_1, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_1, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
+        // Добавить в список товары
+        AddProduct(listId_1, "Кефир", "Кефир Молочная культура в зелёном стаканчике", 4);
+        AddProduct(listId_1, "Масло сливочное", "масло вологодское из Вологды", 2);
+        AddProduct(listId_1, "Сметена 20%", "Домик в деревне", 1);
+        AddProduct(listId_1, "Багет длинный", "Выпечка МЕТРО", 1);
+        AddProduct(listId_1, "Колбава варёная", "В натуральной оболочке, уп.", 1);
+        AddProduct(listId_1, "Помидоры", "Розовые, кг.", 1);
+        // Создать новый список покупок
         var listId_2 = CreateShoppingList("Перекрёсток", "Разовые покупки в Перекрёстке");
-        AddProduct(listId_2, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_2, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_2, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_2, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_2, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_2, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
+        // Добавить в список товары
+        AddProduct(listId_2, "Печенье овсянное", "уп.", 1);
+        AddProduct(listId_2, "Молоко топлёное можайское 4", "бут.", 4);
+        AddProduct(listId_2, "Огурцы свежие", "маленькие, уп.", 2);
+        AddProduct(listId_2, "Блины", "уп.", 1);
+        AddProduct(listId_2, "Творог", "Жирный, уп.", 1);
+        AddProduct(listId_2, "Хлеб чёрный", "Нарезка, уп.", 1);
+        // Создать новый список покупок
         var listId_3 = CreateShoppingList("На дачу", "Покупки для дачи");
-        AddProduct(listId_3, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_3, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_3, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_3, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_3, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_3, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
+        // Добавить в список товары
+        AddProduct(listId_3, "Угли", "Упаковка 10 кг., уп.", 1);
+        AddProduct(listId_3, "Рожиг", "Жидкость для розжига парафиновая, бут.", 2);
+        AddProduct(listId_3, "Решётка для гриля", "Большая., шт.", 1);
+        AddProduct(listId_3, "Шашалык", "Свиной., уп.", 2);
+        AddProduct(listId_3, "Вино красное", "Красное сухое вино., бут.", 2);
+        AddProduct(listId_3, "Боржоми", "0.75 л, бут.", 4);
+        // Создать новый список покупок
         var listId_4 = CreateShoppingList("Крупные", "Крупные покупки");
-        AddProduct(listId_4, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_4, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_4, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_4, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_4, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_4, "Кефир 1", "Кефир Молочная культура в зелёном стаканчике", 4);
+        // Добавить в список товары
+        AddProduct(listId_4, "Газонокосмлка", "Бензиновая не менее 50 см., самоходная", 1);
+        AddProduct(listId_4, "Речной триммер", "Электрический аккумуляторный с аккумуляторами и зарядным устройством", 4);
+        AddProduct(listId_4, "Насос фикальный", "Лучше Керхер", 1);
+        AddProduct(listId_4, "Шланг к насосу", "20 м.", 1);
     }
 }
