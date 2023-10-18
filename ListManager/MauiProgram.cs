@@ -1,4 +1,5 @@
-﻿using ListManager.Services;
+﻿using CommunityToolkit.Maui;
+using ListManager.Services;
 using ListManager.ViewModels;
 using ListManager.Views;
 using Microsoft.Extensions.Logging;
@@ -12,7 +13,8 @@ namespace ListManager
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                //.UseMauiCommunityToolkit()
+                // Initialize the .NET MAUI Community Toolkit
+                .UseMauiCommunityToolkit()
 
                 .ConfigureFonts(fonts =>
                 {

@@ -5,7 +5,9 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListManager", "ListManager\ListManager.csproj", "{30038A60-B84F-423E-A6F3-F350DC401040}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListManager.MSTests", "ListManager.MSTests\ListManager.MSTests.csproj", "{009DD22D-1B2D-4B55-A917-F2A5F158993B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListManager.MSTests", "ListManager.MSTests\ListManager.MSTests.csproj", "{009DD22D-1B2D-4B55-A917-F2A5F158993B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListManager.xUnit", "ListManager.xUnit\ListManager.xUnit.csproj", "{DDDE49FD-A4AF-40BD-A749-62E4FAEC8E3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{009DD22D-1B2D-4B55-A917-F2A5F158993B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{009DD22D-1B2D-4B55-A917-F2A5F158993B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{009DD22D-1B2D-4B55-A917-F2A5F158993B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDDE49FD-A4AF-40BD-A749-62E4FAEC8E3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDDE49FD-A4AF-40BD-A749-62E4FAEC8E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDDE49FD-A4AF-40BD-A749-62E4FAEC8E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDDE49FD-A4AF-40BD-A749-62E4FAEC8E3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

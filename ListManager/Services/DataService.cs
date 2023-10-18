@@ -7,13 +7,19 @@ namespace ListManager.Services;
 public class DataService : IDataService
 {
     // Каталог для хранения данных приложения
-    private static readonly string dir = FileSystem.Current.AppDataDirectory;
+    private static readonly string dir = FileSystem.AppDataDirectory;
 
     // Имя файла для сохранения данных
-    private static readonly string fileName = @"ListManager.data";
+    private static readonly string dataFileName = @"ListManager.lmd";
+
+    // Имя файла для сохранения штампа
+    private static readonly string stampFileName = @"ListManager.lms";
 
     // Путь к файлу данных
-    private readonly string filePath = Path.Combine(dir, fileName);
+    private readonly string dataFilePath;
+
+    // Путь к файлу штампа
+    private readonly string stampFilePath;
 
     // Признак изменения данных (требуется их сохранение)
     private bool dataChanged = false;
@@ -35,6 +41,8 @@ public class DataService : IDataService
 
     public DataService()
     {
+        dataFilePath = Path.Combine(dir, dataFileName);
+        stampFilePath = Path.Combine(dir, stampFileName);
         Data = new DataStore(); 
     }
 
@@ -374,7 +382,7 @@ public class DataService : IDataService
         try // Блок с отслеживанием возникновения исключений
         {
             // Открыти заданный файл для записи и создать поток
-            using FileStream outputStream = File.OpenWrite(filePath);
+            using FileStream outputStream = File.OpenWrite(dataFilePath);
             // Создать "записыватель" потока
             using StreamWriter streamWriter = new StreamWriter(outputStream);
 
@@ -405,11 +413,23 @@ public class DataService : IDataService
     {
         try // Блок с отслеживанием возникновения исключений
         {
-            // Если файл существует, то
-            if (File.Exists(filePath))
+            if (File.Exists(stampFilePath))
             {
                 // Открыти заданный файл для чтения и создать поток
-                using Stream fileStream = File.OpenRead(filePath);
+                using Stream fileStream = File.OpenRead(dataFilePath);
+                // Создать считыватель потока
+                using StreamReader reader = new StreamReader(fileStream);
+                // Считать все текстовые данные из файла в строку
+                var json = await reader.ReadToEndAsync();
+
+                // Десериализовать JSON в заданный объект
+                var dataStamp = JsonSerializer.Deserialize<DataStamp>(json);
+            }
+                // Если файл существует, то
+            if (File.Exists(dataFilePath))
+            {
+                // Открыти заданный файл для чтения и создать поток
+                using Stream fileStream = File.OpenRead(dataFilePath);
                 // Создать считыватель потока
                 using StreamReader reader = new StreamReader(fileStream);
                 // Считать все текстовые данные из файла в строку
@@ -488,4 +508,9 @@ public class DataService : IDataService
         AddProduct(listId_4, "Насос фикальный", "Лучше Керхер", 1);
         AddProduct(listId_4, "Шланг к насосу", "20 м.", 1);
     }
+
+    /// <summary>
+    ///  Получить хранилище данных.
+    /// </summary>
+    public DataStore GetData => Data;
 }

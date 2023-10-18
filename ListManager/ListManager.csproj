@@ -50,7 +50,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\about.png" />
+	  <None Remove="Resources\Images\help.png" />
+	  <None Remove="Resources\Images\home.png" />
+	  <None Remove="Resources\Images\login.png" />
+	  <None Remove="Resources\Images\setting.png" />
+	  <None Remove="Resources\Images\shopping_list.png" />
+	  <None Remove="Resources\Images\task_list.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\ShoppingListsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
