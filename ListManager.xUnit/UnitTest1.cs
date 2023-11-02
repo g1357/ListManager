@@ -13,7 +13,7 @@ namespace ListManager.xUnit
         public void ConstructorTest()
         {
             string file = "testFile1.xml";
-            var filePath = Path.Combine(Microsoft.Maui.Storage.FileSystem.AppDataDirectory, "ListManager.data");
+            //var filePath = Path.Combine(Microsoft.Maui.Storage.FileSystem.AppDataDirectory, "ListManager.data");
 
             Assert.False(File.Exists(file), "deployment failed: " + file +
                 " did not get deployed");

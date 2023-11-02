@@ -43,7 +43,7 @@ public class DataService : IDataService
     {
         dataFilePath = Path.Combine(dir, dataFileName);
         stampFilePath = Path.Combine(dir, stampFileName);
-        Data = new DataStore(); 
+        DataSeed(); 
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public class DataService : IDataService
     /// Получить перечень списков покупок.
     /// </summary>
     /// <returns>Перечень списков покупок</returns>
-    public IEnumerable<ShoppingList> GetShoppingLists()
+    public async Task<IEnumerable<ShoppingList>> GetShoppingLists()
     {
         // Вернуть перечень списков покупок
         return Data.ShoppingLists;
@@ -347,6 +347,19 @@ public class DataService : IDataService
             // Вернуть истину - успешное выполнение операции
             return true;
         }
+    }
+
+    /// <summary>
+    /// Очистить все данные
+    /// </summary>
+    public void ClearAllData()
+    {
+        // Создать объект для хранилища данных
+        Data = new DataStore();
+        // Добавить типы списков
+        InitListKinds();
+        // Установить признак изменения данных
+        dataChanged = true;
     }
     #endregion Реализация интерфейса IDataService
 

@@ -21,7 +21,7 @@ public interface IDataService
     /// Получить перечень списков покупок.
     /// </summary>
     /// <returns>Перечень списков покупок</returns>
-    public IEnumerable<ShoppingList> GetShoppingLists();
+    public Task<IEnumerable<ShoppingList>> GetShoppingLists();
 
     /// <summary>
     /// Создать список покупок.
@@ -102,4 +102,14 @@ public interface IDataService
     /// <returns>Признак успешности обновления данных</returns>
     public bool UpdateProduct(Product product);
     #endregion Операции с товарами в списке покупок
+
+    /// <summary>
+    /// Очистить все данные
+    /// </summary>
+    public void ClearAllData();
+
+    /// <summary>
+    /// Заполнить демонстрационные данные
+    /// </summary>
+    public void DataSeed();
 }

@@ -1,9 +1,14 @@
+using ListManager.ViewModels;
+
 namespace ListManager.Views;
 
 public partial class ShoppingListsPage : ContentPage
 {
-	public ShoppingListsPage()
+	ShoppingListsViewModel viewModel;
+	public ShoppingListsPage(ShoppingListsViewModel viewModel)
 	{
+		BindingContext = this.viewModel = viewModel;
+
 		InitializeComponent();
 	}
 }

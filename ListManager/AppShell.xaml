@@ -7,13 +7,13 @@
     Shell.FlyoutBehavior="Flyout">
 
     <ShellContent Title="Home" Icon="home.png"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage"/>
+        ContentTemplate="{DataTemplate views:MainPage}" />
     <ShellContent Title="Shopping Lists" Icon="shopping_list.png"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage"/>
-    <ShellContent
+        ContentTemplate="{DataTemplate views:ShoppingListsPage}" />
+    <ShellContent 
         Title="Home3"
         ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage"/>
+        Route="Home3"/>
+    <ShellContent Title="Settings" Icon="setting.png"
+        ContentTemplate="{DataTemplate views:SettingsPage}" />
 </Shell>
