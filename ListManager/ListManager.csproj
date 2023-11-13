@@ -51,8 +51,10 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\about.png" />
+	  <None Remove="Resources\Images\add.png" />
 	  <None Remove="Resources\Images\help.png" />
 	  <None Remove="Resources\Images\home.png" />
+	  <None Remove="Resources\Images\icons8-refresh.svg" />
 	  <None Remove="Resources\Images\login.png" />
 	  <None Remove="Resources\Images\reload.svg" />
 	  <None Remove="Resources\Images\setting.png" />

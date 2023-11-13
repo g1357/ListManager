@@ -9,6 +9,8 @@ public partial class MainPage : ContentPage
     {
         // Выдать отладочное сообщение
         Debug.WriteLine($"===== an instance of the class has been created: {nameof(MainPage)}");
+        var m = System.Reflection.MethodBase.GetCurrentMethod();
+        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
 
         InitializeComponent();
         BindingContext = viewModel;
@@ -18,13 +20,17 @@ public partial class MainPage : ContentPage
     {
         // Выдать отладочное сообщение
         Debug.WriteLine($"===== OnAppearing: {nameof(MainPage)}");
+        var m = System.Reflection.MethodBase.GetCurrentMethod();
+        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
 
         base.OnAppearing();
     }
     protected override bool OnBackButtonPressed()
     {
         // Выдать отладочное сообщение
-        Debug.WriteLine($"===== aOnBackButtonPressed: {nameof(MainPage)}");
+        Debug.WriteLine($"===== OnBackButtonPressed: {nameof(MainPage)}");
+        var m = System.Reflection.MethodBase.GetCurrentMethod();
+        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
 
         return base.OnBackButtonPressed();
     }
@@ -32,6 +38,8 @@ public partial class MainPage : ContentPage
     {
         // Выдать отладочное сообщение
         Debug.WriteLine($"===== OnDisappearing: {nameof(MainPage)}");
+        var m = System.Reflection.MethodBase.GetCurrentMethod();
+        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
 
         base.OnDisappearing();
     }
@@ -39,6 +47,8 @@ public partial class MainPage : ContentPage
     {
         // Выдать отладочное сообщение
         Debug.WriteLine($"===== OnNavigatedFrom: {nameof(MainPage)}");
+        var m = System.Reflection.MethodBase.GetCurrentMethod();
+        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
 
         base.OnNavigatedFrom(args);
     }
@@ -46,6 +56,8 @@ public partial class MainPage : ContentPage
     {
         // Выдать отладочное сообщение
         Debug.WriteLine($"===== OnNavigatedTo: {nameof(MainPage)}");
+        var m = System.Reflection.MethodBase.GetCurrentMethod();
+        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
 
         base.OnNavigatedTo(args);
     }
@@ -53,6 +65,8 @@ public partial class MainPage : ContentPage
     {
         // Выдать отладочное сообщение
         Debug.WriteLine($"===== OnNavigatingFrom: {nameof(MainPage)}");
+        var m = System.Reflection.MethodBase.GetCurrentMethod();
+        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
 
         base.OnNavigatingFrom(args);
     }

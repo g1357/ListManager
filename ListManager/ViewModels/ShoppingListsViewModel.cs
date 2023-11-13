@@ -52,6 +52,13 @@ public partial class ShoppingListsViewModel : ViewModelBase
         return;
     }
 
+    [RelayCommand]
+    private async Task AddItemAsync()
+    {
+        await dialogService.DisplayAlert("Add itrm to List",
+            "You will add ityem to list!", "Ok");
+    }
+
     public ShoppingListsViewModel(IDataService dataService,
         INavigationService navigationService, IDialogService dialogService)
     {
@@ -67,5 +74,10 @@ public partial class ShoppingListsViewModel : ViewModelBase
             ShoppingLists.Add(item);
         }
 
+    }
+
+    internal async Task OnAppearing()
+    {
+        await RefreshListAsync();
     }
 }

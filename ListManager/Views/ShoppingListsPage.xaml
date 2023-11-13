@@ -8,8 +8,11 @@
              Title="Shopping Lists">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Refresh" IconImageSource="reload.svg" 
+        <ToolbarItem Text="Refresh" IconImageSource="refresh.svg"
             Command="{Binding RefreshListCommand}"/>
+        <ToolbarItem Text="Add" IconImageSource="add.svg"
+            Command="{Binding AddItemCommand}"/>
+
     </ContentPage.ToolbarItems>
     <Grid RowDefinitions="Auto,*">
         <Label Grid.Row="0" 
