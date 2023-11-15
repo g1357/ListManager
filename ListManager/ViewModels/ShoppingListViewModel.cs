@@ -111,6 +111,12 @@ public partial class ShoppingListViewModel : ViewModelBase
     {
         await dialogService.DisplayAlert("Add Item",
             $"Add Item Buttom Pressed!", "Ok");
+        await navigationService.NavigateToAsync("ProductDetails",
+            new Dictionary<string, object>
+            {
+                { "SelectedProduct", new Product() },
+                { "Mode", "add" }
+            });
     }
 
     [RelayCommand(CanExecute = nameof(IsEditDeleteEnabled))]

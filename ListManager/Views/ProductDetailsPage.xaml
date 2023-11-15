@@ -14,18 +14,21 @@
             <Label Grid.Column="0" Grid.Row="0" VerticalOptions="Center"
                 Text="Name:" FontAttributes="Bold"/>
             <Entry Grid.Column="1" Grid.Row="0" VerticalOptions="Center"
-                Text="{Binding ProductInfo.Name}" IsEnabled="{Binding Editable}" />
+                Text="{Binding ProductInfo.Name}" IsEnabled="{Binding Editable}" 
+                 Placeholder="Enter product name"/>
             <Label Text="Description:" Grid.Row="1"  FontAttributes="Bold"/>
             <Entry Grid.Column="1" Grid.Row="1" VerticalOptions="Center"
-                Text="{Binding ProductInfo.Description}" IsEnabled="{Binding Editable}" />
+                Text="{Binding ProductInfo.Description}" IsEnabled="{Binding Editable}"
+                Placeholder="Enter short product description"/>
             <Label Text="Qty:" Grid.Row="2"  FontAttributes="Bold"/>
             <Entry Grid.Column="1" Grid.Row="2" VerticalOptions="Center"
-                Text="{Binding ProductInfo.Qty}" IsEnabled="{Binding Editable}" />
+                Text="{Binding ProductInfo.Qty}" IsEnabled="{Binding Editable}"
+                Placeholder="Enter quantity of product"/>
             <Label Grid.Column="0" Grid.Row="3" VerticalOptions="Center"
                 Text="Marked:" FontAttributes="Bold"/>
             <CheckBox Grid.Column="1" Grid.Row="3"
                 IsChecked="{Binding ProductInfo.Marked}" IsEnabled="{Binding Editable}"
-                HorizontalOptions="Start"/>
+                HorizontalOptions="Start" />
         </Grid>
     </VerticalStackLayout>
 </ContentPage>
