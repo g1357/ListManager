@@ -26,8 +26,19 @@ public partial class ShoppingListViewModel : ViewModelBase
 
     public ObservableCollection<Product> ProductList { get; set; }
     
-    [ObservableProperty]
-    private ShoppingList? selectedItem;
+    private Product? _selectedItem;
+    public Product? SelectedItem
+    {
+        get => _selectedItem;
+        set
+        {
+            if (SetProperty(ref _selectedItem, value))
+            {
+                EditItemCommand.NotifyCanExecuteChanged();
+                DeleteItemCommand.NotifyCanExecuteChanged();
+            }
+        }
+    }
 
     /// <summary>
     /// Текущий список покупок
@@ -65,6 +76,8 @@ public partial class ShoppingListViewModel : ViewModelBase
         }
         OnPropertyChanged(nameof(ProductList));
         OnPropertyChanged(nameof(CurrentShoppingList));
+        EditItemCommand.NotifyCanExecuteChanged();
+        DeleteItemCommand.NotifyCanExecuteChanged();
         RefreshingFlag = false;
         return;
     }
@@ -74,7 +87,13 @@ public partial class ShoppingListViewModel : ViewModelBase
     {
         //await dialogService.DisplayAlert("Selected item",
         //    $"{product.Name} ({product.Description})", "Ok");
-       
+
+        await navigationService.NavigateToAsync("ProductDetails",
+            new Dictionary<string, object>
+            {
+                { "SelectedProduct", product },
+                { "Mode", "view" }
+            });
     }
 
     [RelayCommand]
@@ -87,6 +106,49 @@ public partial class ShoppingListViewModel : ViewModelBase
         dataService.UpdateProduct(product);
     }
 
+    [RelayCommand]
+    private async Task AddItemAsync()
+    {
+        await dialogService.DisplayAlert("Add Item",
+            $"Add Item Buttom Pressed!", "Ok");
+    }
+
+    [RelayCommand(CanExecute = nameof(IsEditDeleteEnabled))]
+    private async Task EditItemAsync()
+    {
+        if (SelectedItem == null)
+        {
+            await dialogService.DisplayAlert("Edit Item",
+                $"No Selected Item for Editing! Select Item!", "Ok");
+        }
+        else
+        {
+            await dialogService.DisplayAlert("Edit Item",
+                $"Edit Item Buttom Pressed!\n Item: {SelectedItem.Name}", "Ok");
+            await navigationService.NavigateToAsync("ProductDetails",
+                new Dictionary<string, object>
+                {
+                { "SelectedProduct", SelectedItem },
+                { "Mode", "edit" }
+                });
+        }
+    }
+
+    [RelayCommand(CanExecute = nameof(IsEditDeleteEnabled))]
+    private async Task DeleteItemAsync()
+    {
+        if (SelectedItem == null)
+        {
+            await dialogService.DisplayAlert("Delete Item",
+                $"No Selected Item for Deleting! Select Item!", "Ok");
+        }
+        else
+        {
+            await dialogService.DisplayAlert("Delete Item",
+                $"Delete Item Buttom Pressed!\n Item: {SelectedItem.Name}", "Ok");
+        }
+    }
+
     public ShoppingListViewModel(IDataService dataService,
         INavigationService navigationService, IDialogService dialogService)
     {
@@ -96,4 +158,6 @@ public partial class ShoppingListViewModel : ViewModelBase
 
         ProductList = new ObservableCollection<Product>();
     }
+    public bool IsEditDeleteEnabled => _selectedItem != null;
+
 }

@@ -64,5 +64,7 @@ public partial class ShoppingListsPage : ContentPage
         Debug.WriteLine($"===== Method : {m?.Name}  of Class:  {m?.DeclaringType?.Name}");
 
         base.OnNavigatingFrom(args);
+
+        viewModel.OnNavigatedTo();
     }
 }

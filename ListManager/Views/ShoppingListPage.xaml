@@ -8,6 +8,14 @@
              x:Name="ShoppingListContainer"
              x:DataType="vm:ShoppingListViewModel"
              Title="Shopping List">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" IconImageSource="add_white.png"
+            Command="{Binding AddItemCommand}" />
+        <ToolbarItem Text="Edit" IconImageSource="edit_white.png"
+            Command="{Binding EditItemCommand}" />
+        <ToolbarItem Text="Del" IconImageSource="delete_white.png"
+            Command="{Binding DeleteItemCommand}" />
+    </ContentPage.ToolbarItems>
     <Grid RowDefinitions="Auto,Auto,*,Auto">
         <Label Text="{Binding CurrentShoppingList.Name}" Grid.Row="0"
             FontSize="Subtitle"
@@ -19,7 +27,7 @@
         <RefreshView Command="{Binding RefreshListCommand}" Grid.Row="2"
                 IsRefreshing="{Binding RefreshingFlag}" >
             <CollectionView ItemsSource="{Binding ProductList}"
-                SelectedItem="{Binding SelectedItem}" SelectionMode="Single"
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}" SelectionMode="Single"
                 x:Name="collectionView" 
                 SelectionChangedCommand="{Binding SelectionChangedCommand}" 
                 SelectionChangedCommandParameter=

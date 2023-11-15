@@ -82,4 +82,9 @@ public partial class ShoppingListsViewModel : ViewModelBase
     {
         RefreshList();
     }
+
+    internal void OnNavigatedTo()
+    {
+        SelectedItem = null;
+    }
 }

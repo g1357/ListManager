@@ -52,6 +52,9 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\about.png" />
 	  <None Remove="Resources\Images\add.png" />
+	  <None Remove="Resources\Images\add_white.png" />
+	  <None Remove="Resources\Images\delete_white.png" />
+	  <None Remove="Resources\Images\edit_white.png" />
 	  <None Remove="Resources\Images\help.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\icons8-refresh.svg" />
@@ -69,6 +72,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\ProductDetailsPage.xaml.cs">
+	    <DependentUpon>ProductDetailsPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\ProductDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\SettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

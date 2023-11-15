@@ -3,6 +3,7 @@ using ListManager.Services;
 using ListManager.ViewModels;
 using ListManager.Views;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
 
 namespace ListManager
 {
@@ -22,6 +23,14 @@ namespace ListManager
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.ConfigureLifecycleEvents(AppLifecycle =>
+            {
+            #if ANDROID
+                AppLifecycle.AddAndroid(android => android
+                    .OnDestroy((activity) => Android_OnDestroy()));
+            #endif
+            });
+
 #if DEBUG
 		    builder.Logging.AddDebug();
 #endif
@@ -32,6 +41,7 @@ namespace ListManager
             builder.Services.AddPage<MainPage,MainViewModel>();
             builder.Services.AddPage<ShoppingListsPage, ShoppingListsViewModel>("ShoppingLists");
             builder.Services.AddPage<ShoppingListPage, ShoppingListViewModel>("ShoppingList");
+            builder.Services.AddPage<ProductDetailsPage, ProductDetailsViewModel>("ProductDetails");
             builder.Services.AddPage<SettingsPage, SettingsViewModel>("Settings");
             builder.Services.AddPage<Page1View, Page1ViewModel>("Page1");
             builder.Services.AddPage<Page2View, Page2ViewModel>("Page2");
@@ -62,5 +72,9 @@ namespace ListManager
             return services;
         }
 
+        static void Android_OnDestroy()
+        {
+
+        }
     }
 }

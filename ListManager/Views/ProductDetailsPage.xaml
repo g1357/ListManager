@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ListManager.Views.ProductDetailsPage"
+             Title="Product Details">
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Grid ColumnDefinitions="Auto,Auto"
+            RowDefinitions="Auto,Auto,Auto,Auto" 
+            Margin="10"  ColumnSpacing="10" RowSpacing="5">
+            <Label Grid.Column="0" Grid.Row="0" VerticalOptions="Center"
+                Text="Name:" FontAttributes="Bold"/>
+            <Entry Grid.Column="1" Grid.Row="0" VerticalOptions="Center"
+                Text="{Binding ProductInfo.Name}" IsEnabled="{Binding Editable}" />
+            <Label Text="Description:" Grid.Row="1"  FontAttributes="Bold"/>
+            <Entry Grid.Column="1" Grid.Row="1" VerticalOptions="Center"
+                Text="{Binding ProductInfo.Description}" IsEnabled="{Binding Editable}" />
+            <Label Text="Qty:" Grid.Row="2"  FontAttributes="Bold"/>
+            <Entry Grid.Column="1" Grid.Row="2" VerticalOptions="Center"
+                Text="{Binding ProductInfo.Qty}" IsEnabled="{Binding Editable}" />
+            <Label Grid.Column="0" Grid.Row="3" VerticalOptions="Center"
+                Text="Marked:" FontAttributes="Bold"/>
+            <CheckBox Grid.Column="1" Grid.Row="3"
+                IsChecked="{Binding ProductInfo.Marked}" IsEnabled="{Binding Editable}"
+                HorizontalOptions="Start"/>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
