@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:model="clr-namespace:ListManager.Models"
+             xmlns:vm="clr-namespace:ListManager.ViewModels"
+             x:Class="ListManager.Views.ShoppingListPage"
+             x:Name="ShoppingListContainer"
+             x:DataType="vm:ShoppingListViewModel"
+             Title="Shopping List">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <Label Text="{Binding CurrentShoppingList.Name}" Grid.Row="0"
+            FontSize="Subtitle"
+            VerticalOptions="Center" HorizontalOptions="Center" />
+        <Label Text="{Binding CurrentShoppingList.Description}" Grid.Row="1"
+            TextColor="DarkGrey"   
+            VerticalOptions="Center" HorizontalOptions="Center" />
+        <!-- Shopping Lists -->
+        <RefreshView Command="{Binding RefreshListCommand}" Grid.Row="2"
+                IsRefreshing="{Binding RefreshingFlag}" >
+            <CollectionView ItemsSource="{Binding ProductList}"
+                SelectedItem="{Binding SelectedItem}" SelectionMode="Single"
+                x:Name="collectionView" 
+                SelectionChangedCommand="{Binding SelectionChangedCommand}" 
+                SelectionChangedCommandParameter=
+                    "{Binding Source={x:Reference collectionView}, Path=SelectedItem}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Product">
+                        <Grid RowDefinitions="Auto, Auto"
+                            ColumnDefinitions="Auto,*,Auto"
+                            Margin="5" >
+                            <CheckBox IsChecked="{Binding Marked, Mode=TwoWay}" Grid.RowSpan="2" >
+                                <CheckBox.Behaviors>
+                                    <toolkit:EventToCommandBehavior EventName="CheckedChanged"
+                                        Command="{Binding Source={x:Reference ShoppingListContainer}, Path=BindingContext.CheckedChangedCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </CheckBox.Behaviors>
+                            </CheckBox>
+                            <Label Text="{Binding Name}" Grid.Column="1"
+                               FontSize="Medium" FontAttributes="Bold" />
+                            <Label Text="{Binding Qty, StringFormat='Qty: {0} '}" Grid.Column="2" 
+                               FontSize="Small" FontAttributes="Bold" HorizontalOptions="Center"/>
+                            <Label Text="{Binding Description}" Grid.Column="1" Grid.Row="1" 
+                                TextColor="DarkGrey" FontSize="Small" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+    </Grid>
+</ContentPage>

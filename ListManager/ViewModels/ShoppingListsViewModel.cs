@@ -23,24 +23,31 @@ public partial class ShoppingListsViewModel : ViewModelBase
     public ObservableCollection<ShoppingList> ShoppingLists { get; set; }
 
     [ObservableProperty]
-    private ShoppingList? _selectedItem;
+    private ShoppingList? selectedItem;
 
     [RelayCommand]
     private async Task SelectionChangedAsync(ShoppingList  shoppingList)
     {
-        await dialogService.DisplayAlert("Selected item",
-            $"{shoppingList.Name} ({shoppingList.Description})", "Ok");
+        //await dialogService.DisplayAlert("Selected item",
+        //    $"{shoppingList.Name} ({shoppingList.Description})", "Ok");
+
+        await navigationService.NavigateToAsync("ShoppingList",
+            new Dictionary<string, object>
+            {
+                { "SelectedItem", shoppingList }
+            });
+
     }
 
     [ObservableProperty]
     private bool _refreshingFlag = true;
 
     [RelayCommand]
-    private async Task RefreshListAsync()
+    private void RefreshList()
     {
         RefreshingFlag = true;
 
-        var list = await dataService.GetShoppingLists();
+        var list = dataService.GetShoppingLists();
         ShoppingLists = new ObservableCollection<ShoppingList>();
         foreach (var item in list)
         {
@@ -66,18 +73,13 @@ public partial class ShoppingListsViewModel : ViewModelBase
         this.navigationService = navigationService;
         this.dialogService = dialogService;
 
-        //RefreshList();
-        var list = dataService.GetShoppingLists().Result;
         ShoppingLists = new ObservableCollection<ShoppingList>();
-        foreach (var item in list)
-        {
-            ShoppingLists.Add(item);
-        }
 
-    }
+        RefreshList();
+     }
 
-    internal async Task OnAppearing()
+    internal void OnAppearing()
     {
-        await RefreshListAsync();
+        RefreshList();
     }
 }

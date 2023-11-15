@@ -43,6 +43,8 @@ public class DataService : IDataService
     {
         dataFilePath = Path.Combine(dir, dataFileName);
         stampFilePath = Path.Combine(dir, stampFileName);
+        
+        Data = new DataStore();
         DataSeed(); 
     }
 
@@ -88,7 +90,7 @@ public class DataService : IDataService
     /// Получить перечень списков покупок.
     /// </summary>
     /// <returns>Перечень списков покупок</returns>
-    public async Task<IEnumerable<ShoppingList>> GetShoppingLists()
+    public IEnumerable<ShoppingList> GetShoppingLists()
     {
         // Вернуть перечень списков покупок
         return Data.ShoppingLists;
@@ -395,9 +397,10 @@ public class DataService : IDataService
         try // Блок с отслеживанием возникновения исключений
         {
             // Открыти заданный файл для записи и создать поток
-            using FileStream outputStream = File.OpenWrite(dataFilePath);
+            //using FileStream outputStream = File.OpenWrite(dataFilePath);
             // Создать "записыватель" потока
-            using StreamWriter streamWriter = new StreamWriter(outputStream);
+            //using StreamWriter streamWriter = new StreamWriter(outputStream, false);
+            using StreamWriter streamWriter = File.CreateText(dataFilePath);
 
             // Сериализовать данные приложения в строку в формате JSON
             string json = JsonSerializer.Serialize<DataStore>(Data);
@@ -484,8 +487,6 @@ public class DataService : IDataService
     /// </summary>
     public void DataSeed()
     {
-        // Создать объект для хранилища данных
-        Data = new DataStore();
         // Создать новый список покупок
         var listId_1 = CreateShoppingList("МЕТРО", "Еженедельные покупки в МЕТРО");
         // Добавить в список товары

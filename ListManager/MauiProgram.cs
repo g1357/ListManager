@@ -31,6 +31,7 @@ namespace ListManager
 
             builder.Services.AddPage<MainPage,MainViewModel>();
             builder.Services.AddPage<ShoppingListsPage, ShoppingListsViewModel>("ShoppingLists");
+            builder.Services.AddPage<ShoppingListPage, ShoppingListViewModel>("ShoppingList");
             builder.Services.AddPage<SettingsPage, SettingsViewModel>("Settings");
             builder.Services.AddPage<Page1View, Page1ViewModel>("Page1");
             builder.Services.AddPage<Page2View, Page2ViewModel>("Page2");

@@ -26,10 +26,10 @@ public class ShoppingList
     /// <summary>
     /// Наименование списка.
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// Краткое описание списка.
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
 }

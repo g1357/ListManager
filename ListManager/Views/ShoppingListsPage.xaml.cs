@@ -10,26 +10,26 @@ public partial class ShoppingListsPage : ContentPage
 	{
         // Выдать отладочное сообщение
         var m = System.Reflection.MethodBase.GetCurrentMethod();
-        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
+        Debug.WriteLine($"===== Method : {m?.Name} of Class: {m?.DeclaringType?.Name}");
 
         BindingContext = this.viewModel = viewModel;
 
 		InitializeComponent();
 	}
-    protected async override void OnAppearing()
+    protected override void OnAppearing()
     {
         // Выдать отладочное сообщение
         var m = System.Reflection.MethodBase.GetCurrentMethod();
-        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
+        Debug.WriteLine($"===== Method : {m?.Name} of Class: {m?.DeclaringType?.Name}");
 
         base.OnAppearing();
-        await viewModel.OnAppearing();
+        viewModel.OnAppearing();
     }
     protected override bool OnBackButtonPressed()
     {
         // Выдать отладочное сообщение
         var m = System.Reflection.MethodBase.GetCurrentMethod();
-        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
+        Debug.WriteLine($"===== Method : {m?.Name} of Class: {m?.DeclaringType?.Name}");
 
         return base.OnBackButtonPressed();
     }
@@ -37,7 +37,7 @@ public partial class ShoppingListsPage : ContentPage
     {
         // Выдать отладочное сообщение
         var m = System.Reflection.MethodBase.GetCurrentMethod();
-        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
+        Debug.WriteLine($"===== Method : {m?.Name} of Class: {m?.DeclaringType?.Name}");
 
         base.OnDisappearing();
     }
@@ -45,7 +45,7 @@ public partial class ShoppingListsPage : ContentPage
     {
         // Выдать отладочное сообщение
         var m = System.Reflection.MethodBase.GetCurrentMethod();
-        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
+        Debug.WriteLine($"===== Method : {m?.Name}  of Class:  {m?.DeclaringType?.Name}");
 
         base.OnNavigatedFrom(args);
     }
@@ -53,7 +53,7 @@ public partial class ShoppingListsPage : ContentPage
     {
         // Выдать отладочное сообщение
         var m = System.Reflection.MethodBase.GetCurrentMethod();
-        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
+        Debug.WriteLine($"===== Method : {m?.Name}  of Class:  {m?.DeclaringType?.Name}");
 
         base.OnNavigatedTo(args);
     }
@@ -61,7 +61,7 @@ public partial class ShoppingListsPage : ContentPage
     {
         // Выдать отладочное сообщение
         var m = System.Reflection.MethodBase.GetCurrentMethod();
-        Debug.WriteLine($"===== Method : {m.Name} of Class: {m.DeclaringType.Name}");
+        Debug.WriteLine($"===== Method : {m?.Name}  of Class:  {m?.DeclaringType?.Name}");
 
         base.OnNavigatingFrom(args);
     }

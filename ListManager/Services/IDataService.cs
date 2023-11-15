@@ -21,7 +21,7 @@ public interface IDataService
     /// Получить перечень списков покупок.
     /// </summary>
     /// <returns>Перечень списков покупок</returns>
-    public Task<IEnumerable<ShoppingList>> GetShoppingLists();
+    public IEnumerable<ShoppingList> GetShoppingLists();
 
     /// <summary>
     /// Создать список покупок.
@@ -107,6 +107,18 @@ public interface IDataService
     /// Очистить все данные
     /// </summary>
     public void ClearAllData();
+
+    /// <summary>
+    /// Локально охранить данные приложения
+    /// </summary>
+    /// <returns>Признак успешности сохранения данных</returns>
+    public Task<bool> SaveData();
+
+    /// <summary>
+    /// Восстановить данные из локального хранилища.
+    /// </summary>
+    /// <returns>Признак успешного восстановления данных</returns>
+    public Task<bool> RestoreData();
 
     /// <summary>
     /// Заполнить демонстрационные данные

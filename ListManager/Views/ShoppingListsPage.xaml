@@ -40,7 +40,7 @@
                         <Grid RowDefinitions="Auto, Auto"
                             ColumnDefinitions="Auto,Auto"
                             Margin="5" >
-                            <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold" />
+                            <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" />
                             <Label Text="{Binding Description}" 
                                 FontSize="Small" Grid.Row="1" />
                         </Grid>

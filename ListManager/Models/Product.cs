@@ -25,12 +25,12 @@ public class Product
     /// <summary>
     /// Название продукта
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// Краткое описание продукта
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// Количество продукта
@@ -41,4 +41,15 @@ public class Product
     /// Отмечен (куплен)
     /// </summary>
     public bool Marked { get; set; }
+
+    public Product(Product product)
+    {
+        ListId = product.ListId;
+        Id = product.Id;
+        Name = product.Name;
+        Description = product.Description;
+        Qty = product.Qty;
+        Marked = product.Marked;
+    }
+    public Product() { }
 }
