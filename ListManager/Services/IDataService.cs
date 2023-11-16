@@ -80,7 +80,14 @@ public interface IDataService
     public bool AddProduct(int listId,
         string name, string description, int qty);
 
-    
+    /// <summary>
+    /// Добавить товар в список покупок.
+    /// </summary>
+    /// <param name="newProduct">Добавляемый товар. 
+    /// Поле Id будет переопределено.</param>
+    /// <returns>признак успешности добавления товара к списку</returns>
+    public bool AddProduct(Product newProduct);
+
     /// <summary>
     /// Удалить продукт из списка покупок.
     /// </summary>

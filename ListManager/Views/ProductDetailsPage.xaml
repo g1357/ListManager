@@ -9,26 +9,30 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Grid ColumnDefinitions="Auto,Auto"
-            RowDefinitions="Auto,Auto,Auto,Auto" 
+            RowDefinitions="Auto,Auto,Auto,Auto,Auto" 
             Margin="10"  ColumnSpacing="10" RowSpacing="5">
             <Label Grid.Column="0" Grid.Row="0" VerticalOptions="Center"
                 Text="Name:" FontAttributes="Bold"/>
             <Entry Grid.Column="1" Grid.Row="0" VerticalOptions="Center"
-                Text="{Binding ProductInfo.Name}" IsEnabled="{Binding Editable}" 
+                Text="{Binding ProductName}" IsEnabled="{Binding Editable}" 
                  Placeholder="Enter product name"/>
             <Label Text="Description:" Grid.Row="1"  FontAttributes="Bold"/>
             <Entry Grid.Column="1" Grid.Row="1" VerticalOptions="Center"
-                Text="{Binding ProductInfo.Description}" IsEnabled="{Binding Editable}"
+                Text="{Binding ProductDescription}" IsEnabled="{Binding Editable}"
                 Placeholder="Enter short product description"/>
             <Label Text="Qty:" Grid.Row="2"  FontAttributes="Bold"/>
             <Entry Grid.Column="1" Grid.Row="2" VerticalOptions="Center"
-                Text="{Binding ProductInfo.Qty}" IsEnabled="{Binding Editable}"
+                Text="{Binding ProductQty}" IsEnabled="{Binding Editable}"
                 Placeholder="Enter quantity of product"/>
             <Label Grid.Column="0" Grid.Row="3" VerticalOptions="Center"
                 Text="Marked:" FontAttributes="Bold"/>
             <CheckBox Grid.Column="1" Grid.Row="3"
-                IsChecked="{Binding ProductInfo.Marked}" IsEnabled="{Binding Editable}"
+                IsChecked="{Binding ProductMarked}" IsEnabled="{Binding Editable}"
                 HorizontalOptions="Start" />
+            <HorizontalStackLayout Grid.Column="1" Grid.Row="4" Spacing="5" >
+                <Button Text="Save" Command="{Binding SaveCommand}" IsVisible="{Binding IsSaveBtnVisible}" />
+                <Button Text="Cancel" Command="{Binding CancelCommand}"  IsVisible="{Binding IsCancelBtnVisible}" />
+            </HorizontalStackLayout>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

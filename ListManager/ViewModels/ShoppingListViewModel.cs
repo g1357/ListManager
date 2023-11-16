@@ -114,7 +114,7 @@ public partial class ShoppingListViewModel : ViewModelBase
         await navigationService.NavigateToAsync("ProductDetails",
             new Dictionary<string, object>
             {
-                { "SelectedProduct", new Product() },
+                { "SelectedProduct", new Product{ ListId = CurrentShoppingList.Id } },
                 { "Mode", "add" }
             });
     }
@@ -166,4 +166,8 @@ public partial class ShoppingListViewModel : ViewModelBase
     }
     public bool IsEditDeleteEnabled => _selectedItem != null;
 
+    public void OnNavigatedTo()
+    {
+        RefreshList();
+    }
 }

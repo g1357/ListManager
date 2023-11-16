@@ -21,7 +21,7 @@ public partial class ShoppingListPage : ContentPage
 
         base.OnNavigatedTo(args);
 
-        //viewModel.OnNavigatedTo();
+        viewModel.OnNavigatedTo();
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿using ListManager.Models;
 using System.Text.Json;
+using System.Xml.Linq;
 
 // Пространство имён моделей данных
 namespace ListManager.Services;
@@ -262,6 +263,31 @@ public class DataService : IDataService
         // Вернуть истину
         return true;
     }
+
+    /// <summary>
+    /// Добавить товар в список покупок.
+    /// </summary>
+    /// <param name="newProduct">Добавляемый товар. 
+    /// Поле Id будет переопределено.</param>
+    /// <returns>признак успешности добавления товара к списку</returns>
+    public bool AddProduct(Product newProduct)
+    {
+        // Проверить допустимость типа списка
+        var item = Data.ShoppingLists.FirstOrDefault(x =>
+            x.Id == newProduct.ListId);
+        if (item == null)
+        {
+            return false;
+        }
+        newProduct.Id = NextProductId;
+        // Добавить продукт в общий список продуктов
+        Data.ProductList.Add(newProduct);
+        // Установить признак изменения данных
+        dataChanged = true;
+        // Вернуть истину
+        return true;
+    }
+
 
     /// <summary>
     /// Удалить продукт из списка покупок.
