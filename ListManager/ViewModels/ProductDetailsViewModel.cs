@@ -2,30 +2,30 @@
 using CommunityToolkit.Mvvm.Input;
 using ListManager.Models;
 using ListManager.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ListManager.ViewModels;
 
 /// <summary>
-/// Модель представления детфльной информации о продукте.
+/// Модель представления детальной информации о продукте.
 /// </summary>
+// Параметр: Выбранный продукт для создания/просмотра/редактирования/удаления.
+// При создании в продукте передаётмя только мдентификатор списка.
 [QueryProperty(nameof(ProductInfo), "SelectedProduct")]
+// Режим работы представления: просмотр, добавление, редактирование
 [QueryProperty(nameof(Mode), "Mode")]
 
 public partial class ProductDetailsViewModel : ViewModelBase
 {
+    #region Сервисы
     // Сервис данных
     private readonly IDataService dataService;
     // Сервис навигации между страницами
     private readonly INavigationService navigationService;
     // Сервис диалогов
     private readonly IDialogService dialogService;
+    #endregion Сервисы
 
-
+    #region Параметры страницы
     private Product? _productInfo;
     public Product? ProductInfo
     {
@@ -38,6 +38,9 @@ public partial class ProductDetailsViewModel : ViewModelBase
                 ProductDescription = _productInfo.Description;
                 ProductQty = _productInfo.Qty;
                 ProductMarked = _productInfo.Marked;
+                dataChanged = false;
+                SaveCommand.NotifyCanExecuteChanged();
+                CancelCommand.NotifyCanExecuteChanged();
             }
         }
     }
@@ -61,13 +64,65 @@ public partial class ProductDetailsViewModel : ViewModelBase
                     case "edit":
                         Editable = true;
                         break;
-                    default:
+                    default: // Внутренняя ошибка приложения
                         break;
                 }
             }
         }
     }
+    #endregion Параметры страницы
 
+    #region Команды меню заголовка страницы
+    /// <summary>
+    /// Добавить новый продукт в список
+    /// </summary>
+    /// <returns>нет</returns>
+    [RelayCommand]
+    private async Task AddItemAsync()
+    {
+        await dialogService.DisplayAlert("Add Item",
+            $"Add Item Buttom Pressed!", "Ok");
+    }
+
+    /// <summary>
+    /// Перейти из режима просмотра (view) 
+    /// в режим редактирования (edit) продукта.
+    /// </summary>
+    /// <returns>нет</returns>
+    [RelayCommand(CanExecute = nameof(IsEditDeleteEnabled))]
+    private async Task EditItemAsync()
+    {
+        await dialogService.DisplayAlert("Edit Item",
+            "Edit Item Buttom Pressed!", "Ok");
+        Mode = "edit";
+        OnPropertyChanged();
+    }
+
+    /// <summary>
+    /// Удалить текущий продукт.
+    /// </summary>
+    /// <returns>нет</returns>
+    [RelayCommand(CanExecute = nameof(IsEditDeleteEnabled))]
+    private async Task DeleteItemAsync()
+    {
+        if (Mode == "Add")
+        {
+            await dialogService.DisplayAlert("Delete Item",
+                "You can not delete this product.\nIt is not saved yet!",
+                "Ok");
+        }
+        else
+        {
+            await dialogService.DisplayAlert("Delete Item",
+                "Delete Item Buttom Pressed!", "Ok");
+        }
+    }
+
+    public bool IsEditDeleteEnabled => Mode != "view";
+
+    #endregion Команды меню заголовка страницы
+
+    #region Поля формы редактирования продукта
     private string? _productName;
     public string? ProductName
     {
@@ -98,8 +153,8 @@ public partial class ProductDetailsViewModel : ViewModelBase
         }
     }
 
-    private int _productQty;
-    public int ProductQty
+    private decimal _productQty;
+    public decimal ProductQty
     {
         get => _productQty;
         set
@@ -127,12 +182,18 @@ public partial class ProductDetailsViewModel : ViewModelBase
             }
         }
     }
+    #endregion Поля формы редактирования продукта
 
+    /// <summary>
+    /// Свойство возможности редактирования формы
+    /// </summary>
     [ObservableProperty]
     private bool _editable;
 
+    // Признак изменения данные о продукте в форме
     private bool dataChanged = false;
 
+    #region Кнопки формы страницы
     [RelayCommand(CanExecute = nameof(IsSaveBtnEnabled))]
     private async Task SaveAsync()
     {
@@ -156,7 +217,7 @@ public partial class ProductDetailsViewModel : ViewModelBase
                 newProduct = new Product
                 {
                     ListId = _productInfo.ListId,
-                    Id = 0, // _productInfo.Id,
+                    Id = 0, // Будет установлен при добавлении в хранилище данных
                     Name = _productName,
                     Description = _productDescription,
                     Qty = _productQty,
@@ -175,6 +236,7 @@ public partial class ProductDetailsViewModel : ViewModelBase
         await navigationService.NavigateBackAsync();
     }
     public bool IsCancelBtnEnabled => dataChanged;
+    #endregion Кнопки формы страницы
 
     public ProductDetailsViewModel(IDataService dataService,
         INavigationService navigationService, IDialogService dialogService)

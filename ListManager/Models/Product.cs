@@ -35,7 +35,7 @@ public class Product
     /// <summary>
     /// Количество продукта
     /// </summary>
-    public int Qty { get; set; }
+    public decimal Qty { get; set; }
 
     /// <summary>
     /// Отмечен (куплен)

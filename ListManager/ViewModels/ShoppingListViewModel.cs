@@ -87,6 +87,7 @@ public partial class ShoppingListViewModel : ViewModelBase
     {
         //await dialogService.DisplayAlert("Selected item",
         //    $"{product.Name} ({product.Description})", "Ok");
+        if (SelectedItem == null) return;
 
         await navigationService.NavigateToAsync("ProductDetails",
             new Dictionary<string, object>
@@ -169,5 +170,6 @@ public partial class ShoppingListViewModel : ViewModelBase
     public void OnNavigatedTo()
     {
         RefreshList();
+        SelectedItem = null;
     }
 }
