@@ -4,6 +4,8 @@ using ListManager.ViewModels;
 using ListManager.Views;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
+using Syncfusion.Maui.Core.Hosting;
+using System.Diagnostics;
 
 namespace ListManager
 {
@@ -22,13 +24,15 @@ namespace ListManager
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-
+            builder.ConfigureSyncfusionCore();
             builder.ConfigureLifecycleEvents(AppLifecycle =>
             {
-            #if ANDROID
+#if ANDROID
                 AppLifecycle.AddAndroid(android => android
-                    .OnDestroy((activity) => Android_OnDestroy()));
-            #endif
+                    .OnDestroy((activity) => Android_OnDestroy())
+                    .OnStop((activity) => Android_OnStop())
+                    );
+#endif
             });
 
 #if DEBUG
@@ -42,6 +46,7 @@ namespace ListManager
             builder.Services.AddPage<ShoppingListsPage, ShoppingListsViewModel>("ShoppingLists");
             builder.Services.AddPage<ShoppingListPage, ShoppingListViewModel>("ShoppingList");
             builder.Services.AddPage<ProductDetailsPage, ProductDetailsViewModel>("ProductDetails");
+            builder.Services.AddPage<TaskListPage, TaskListViewModel>("TaskList");
             builder.Services.AddPage<SettingsPage, SettingsViewModel>("Settings");
             builder.Services.AddPage<Page1View, Page1ViewModel>("Page1");
             builder.Services.AddPage<Page2View, Page2ViewModel>("Page2");
@@ -74,7 +79,13 @@ namespace ListManager
 
         static void Android_OnDestroy()
         {
-
+            var m = System.Reflection.MethodBase.GetCurrentMethod();
+            Debug.WriteLine($"===== Method : {m?.Name} of Class: {m?.DeclaringType?.Name}");
+        }
+        static void Android_OnStop()
+        {
+            var m = System.Reflection.MethodBase.GetCurrentMethod();
+            Debug.WriteLine($"===== Method : {m?.Name} of Class: {m?.DeclaringType?.Name}");
         }
     }
 }

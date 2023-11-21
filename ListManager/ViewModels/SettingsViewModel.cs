@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using ListManager.Models;
 using ListManager.Services;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,22 @@ public partial class SettingsViewModel : ViewModelBase
     private readonly IDataService dataService;
     // Сервис навигации между страницами
     private readonly INavigationService navigationService;
+
+    [ObservableProperty]
+    private List<ListKind> _startPageList;
+
+    private ListKind? _selectedItem;
+    public ListKind? SelectedItem
+    {
+        get => _selectedItem;
+        set
+        {
+            if (SetProperty(ref _selectedItem, value))
+            {
+                Preferences.Set("StartPage", _selectedItem.Id);
+            }
+        }
+    }
 
     [RelayCommand]
     private async Task ClearDataAsync()
@@ -57,5 +75,15 @@ public partial class SettingsViewModel : ViewModelBase
         this.dialogService = dialogService;
         this.dataService = dataService;
         this.navigationService = navigationService;
+
+        var startPage = Preferences.Get("StartPage", 0);
+        var listKinds = dataService.GetListTypes();
+        StartPageList = new List<ListKind>();
+        StartPageList.Add(new ListKind { Id = 0, Name = "Выбор типа списка", Description = "" });
+        foreach (var listKind in listKinds)
+        {
+            StartPageList.Add(listKind);
+        }
+        SelectedItem = StartPageList.FirstOrDefault(x => x.Id == startPage);
     }
 }

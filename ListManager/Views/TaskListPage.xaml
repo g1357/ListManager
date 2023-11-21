@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:sf="clr-namespace:Syncfusion.Maui.TreeView;assembly=Syncfusion.Maui.TreeView"
+             xmlns:model="clr-namespace:ListManager.Models"
+             xmlns:vm="clr-namespace:ListManager.ViewModels"
+             x:Class="ListManager.Views.TaskListPage"
+             x:DataType="vm:TaskListViewModel"
+             x:Name="Task_List"
+             Title="Task List">
+    <Grid RowDefinitions="Auto,*">
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <sf:SfTreeView ItemsSource="{Binding TreeViewData}"  Grid.Row="1"
+            ItemTemplateContextType="Item" ItemHeight="24"
+            ChildPropertyName="SubTasks" 
+            AutoExpandMode="RootNodesExpanded">
+            <sf:SfTreeView.ItemTemplate>
+                <DataTemplate x:DataType="model:TaskManager">
+                    <Grid>
+                        <HorizontalStackLayout>
+                            <CheckBox IsChecked="{Binding Done}"  >
+                                <CheckBox.Behaviors>
+                                    <toolkit:EventToCommandBehavior EventName="CheckedChanged"
+                                        Command="{Binding Source={x:Reference Task_List}, Path=BindingContext.DoneChangedCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </CheckBox.Behaviors>
+                            </CheckBox>
+                            <Label Text="{Binding Name}" LineBreakMode="NoWrap"
+                               VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </sf:SfTreeView.ItemTemplate>
+        </sf:SfTreeView>
+    </Grid>
+</ContentPage>

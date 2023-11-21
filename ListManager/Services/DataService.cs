@@ -1,4 +1,5 @@
 ﻿using ListManager.Models;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Xml.Linq;
 
@@ -418,6 +419,7 @@ public class DataService : IDataService
     /// <returns>Признак успешности сохранения данных</returns>
     public async Task<bool> SaveData()
     {
+        Debug.WriteLine("==== SaveData is called!");
         // Если данные не изменяль, то выйти
         if (!dataChanged) return true;
         try // Блок с отслеживанием возникновения исключений

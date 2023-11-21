@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ListManager.ViewModels"
              x:Class="ListManager.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel"
              Title="Settings Page">
     <VerticalStackLayout>
         <Label Text="Application Settings" FontSize="Header" FontAttributes="Bold"
             HorizontalOptions="Center" Margin="10"/>
-        <Frame BorderColor="DarkGrey">
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Start Page:" FontAttributes="Bold" VerticalOptions="Center"/>
+            <Picker Title="Select Start Page" ItemsSource="{Binding StartPageList}"
+                ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedItem}" />
+        </HorizontalStackLayout>
+        <Frame BorderColor="DarkGrey" Padding="5">
             <VerticalStackLayout>
                 <Label Text="Data Operations:" 
                     HorizontalOptions="Center"/>    
