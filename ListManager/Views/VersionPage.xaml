@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ListManager.ViewModels"
+             x:Class="ListManager.Views.VersionPage"
+             x:DataType="vm:VersionViewModel"
+             Title="VersionPage">
+    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto" 
+        ColumnDefinitions="auto,auto"  >
+        <Label Text="Application Version Information" FontSize="Large" FontAttributes="Bold"
+            HorizontalOptions="Center" />
+        <Label Text="IsFirstLaunchEver" Grid.Row="1" Grid.Column="0" />
+        <Label Text="{Binding IsFirst}" Grid.Row="1" Grid.Column="1" />
+        <Label Text="CurrentVersionIsFirst" Grid.Row="2" Grid.Column="0" />
+        <Label Text="{Binding CurrentVersionIsFirst}" Grid.Row="2" Grid.Column="1" />
+        <Label Text="CurrentBuildIsFirst" Grid.Row="3" Grid.Column="0" />
+        <Label Text="{Binding CurrentBuildIsFirst}" Grid.Row="3" Grid.Column="1" />
+        <Label Text="CurrentVersion" Grid.Row="4" Grid.Column="0" />
+        <Label Text="{Binding CurrentVersion}" Grid.Row="4" Grid.Column="1" />
+        <Label Text="CurrentBuild" Grid.Row="5" Grid.Column="0" />
+        <Label Text="{Binding CurrentBuild}" Grid.Row="5" Grid.Column="1" />
+        <Label Text="FirstInstalledVer" Grid.Row="6" Grid.Column="0" />
+        <Label Text="{Binding FirstInstalledVer}" Grid.Row="6" Grid.Column="1" />
+        <Label Text="FirstInstalledBuild" Grid.Row="7" Grid.Column="0" />
+        <Label Text="{Binding FirstInstalledBuild}" Grid.Row="7" Grid.Column="1" />
+        <Label Text="VersionHistory" Grid.Row="8" Grid.Column="0" />
+        <Label Text="{Binding VersionHistory}" Grid.Row="8" Grid.Column="1" />
+        <Label Text="BuildHistory" Grid.Row="9" Grid.Column="0" />
+        <Label Text="{Binding BuildHistory}" Grid.Row="9" Grid.Column="1" />
+        <Label Text="PreviousVersion" Grid.Row="10" Grid.Column="0" />
+        <Label Text="{Binding PreviousVersion}" Grid.Row="10" Grid.Column="1" />
+        <Label Text="PreviousBuild" Grid.Row="11" Grid.Column="0" />
+        <Label Text="{Binding PreviousBuild}" Grid.Row="11" Grid.Column="1" />
+    </Grid>
+</ContentPage>

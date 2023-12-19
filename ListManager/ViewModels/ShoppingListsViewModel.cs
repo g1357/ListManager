@@ -78,7 +78,8 @@ public partial class ShoppingListsViewModel : ViewModelBase
     {
         //await dialogService.DisplayAlert("Help",
         //    "You asked help! The help is comming!", "Ok");
-        var helpPage = Application.Current.MainPage.Handler.MauiContext.Services.GetService<HelpPage>();
+        //var helpPage = Application.Current.MainPage.Handler.MauiContext.Services.GetService<HelpPage>();
+        var helpPage = ServiceHelper.GetService<HelpPage>();
         await navigationService.PushModalAsync(helpPage);
     }
 

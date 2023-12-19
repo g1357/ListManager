@@ -64,6 +64,8 @@
 	  <None Remove="Resources\Images\setting.png" />
 	  <None Remove="Resources\Images\shopping_list.png" />
 	  <None Remove="Resources\Images\task_list.png" />
+	  <None Remove="Resources\Raw\Help.html" />
+	  <None Remove="Resources\Raw\Help\Welcome.html" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -99,6 +101,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TaskListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\VersionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

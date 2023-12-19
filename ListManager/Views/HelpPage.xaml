@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ListManager.ViewModels"
+             x:DataType="vm:HelpViewModel"
              x:Class="ListManager.Views.HelpPage"
              Title="HelpPage">
-    <VerticalStackLayout> 
+    <Grid RowDefinitions="auto,*,auto"> 
         <Label Text="Help" FontSize="Large" FontAttributes="Bold"
-            HorizontalOptions="Center"/>
-        <Label Text="Help content." />
-        <Button Text="Close" Command="{Binding CloseCommand}" />
-    </VerticalStackLayout>
+            Grid.Row="0" HorizontalOptions="Center"/>
+        <WebView Source="Help/Help.html" Grid.Row="1"/>
+        <Button Text="Close" Command="{Binding CloseCommand}" Grid.Row="2"/>
+    </Grid>
 </ContentPage>

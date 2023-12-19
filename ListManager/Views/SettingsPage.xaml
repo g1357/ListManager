@@ -23,5 +23,7 @@
                     Margin="5" />
             </VerticalStackLayout>
         </Frame>
+        <Button Text="Version Information" Margin="10"
+            Command="{Binding VersionCommand}" />
     </VerticalStackLayout>
 </ContentPage>

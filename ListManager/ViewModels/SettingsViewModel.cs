@@ -69,6 +69,12 @@ public partial class SettingsViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    private async Task VersionAsync()
+    {
+        await navigationService.NavigateToAsync("Version");
+    }
+
     public SettingsViewModel(IDialogService dialogService,
         IDataService dataService, INavigationService navigationService)
     {

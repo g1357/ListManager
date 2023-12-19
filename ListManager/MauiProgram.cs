@@ -23,6 +23,10 @@ namespace ListManager
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                })
+                .ConfigureEssentials(essentials =>
+                {
+                    essentials.UseVersionTracking(); // Подключение отслеживания версий
                 });
             builder.ConfigureSyncfusionCore();
             builder.ConfigureLifecycleEvents(AppLifecycle =>
@@ -50,10 +54,13 @@ namespace ListManager
             builder.Services.AddPage<TaskListPage, TaskListViewModel>("TaskList");
             builder.Services.AddPage<SettingsPage, SettingsViewModel>("Settings");
             builder.Services.AddPage<HelpPage, HelpViewModel>("Help");
+            builder.Services.AddPage<VersionPage, VersionViewModel>("Version");
             builder.Services.AddPage<Page1View, Page1ViewModel>("Page1");
             builder.Services.AddPage<Page2View, Page2ViewModel>("Page2");
 
-            return builder.Build();
+            var app = builder.Build();
+            ServiceHelper.Initialize(app.Services);
+            return app;
         }
 
         /// <summary>
