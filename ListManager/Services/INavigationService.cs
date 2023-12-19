@@ -45,4 +45,8 @@ public interface INavigationService
     /// </summary>
     /// <returns>true, если возврат возможен, иначе - афдыу</returns>
     public bool CanNavigateBack();
+
+    public Task PushModalAsync(Page page);
+    public Task PopModalAsync();
+
 }

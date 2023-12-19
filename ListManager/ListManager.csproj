@@ -59,6 +59,7 @@
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\icons8-refresh.svg" />
 	  <None Remove="Resources\Images\login.png" />
+	  <None Remove="Resources\Images\question_mark_30.png" />
 	  <None Remove="Resources\Images\reload.svg" />
 	  <None Remove="Resources\Images\setting.png" />
 	  <None Remove="Resources\Images\shopping_list.png" />
@@ -79,10 +80,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\HelpPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ProductDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ShoppingListDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ShoppingListPage.xaml">

@@ -12,6 +12,8 @@
             Command="{Binding RefreshListCommand}"/>
         <ToolbarItem Text="Add" IconImageSource="add.svg"
             Command="{Binding AddItemCommand}"/>
+        <ToolbarItem Text="Help" IconImageSource="question_mark_30.png"
+            Command="{Binding HelpCommand}"/>
 
     </ContentPage.ToolbarItems>
     <Grid RowDefinitions="Auto,*">

@@ -1,0 +1,184 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using ListManager.Models;
+using ListManager.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ListManager.ViewModels;
+
+// Параметры: Выбранный продукт для создания/просмотра/редактирования/удаления.
+// При создании в продукте передаётмя только мдентификатор списка.
+[QueryProperty(nameof(ShoppingListInfo), "SelectedShoppingList")]
+// Режим работы представления: просмотр, добавление, редактирование
+[QueryProperty(nameof(Mode), "Mode")]
+public partial class ShoppingListDetailsViewModel : ViewModelBase
+{
+    #region Сервисы
+    // Сервис данных
+    private readonly IDataService dataService;
+    // Сервис навигации между страницами
+    private readonly INavigationService navigationService;
+    // Сервис диалогов
+    private readonly IDialogService dialogService;
+    #endregion Сервисы
+
+    #region Параметры страницы
+    private ShoppingList _shoppingListInfo;
+    public ShoppingList ShoppingListInfo
+    {
+        get => _shoppingListInfo;
+        set
+        {
+            if (SetProperty(ref _shoppingListInfo, value))
+            {
+                ListName = _shoppingListInfo.Name;
+                ListDescription = _shoppingListInfo.Description;
+                dataChanged = false;
+                SaveCommand.NotifyCanExecuteChanged();
+                CancelCommand.NotifyCanExecuteChanged();
+            }
+        }
+    }
+
+    private string? _mode;
+    public string? Mode
+    {
+        get => _mode;
+        set
+        {
+            if (SetProperty(ref _mode, value))
+            {
+                switch (_mode)
+                {
+                    case "view":
+                        Editable = false;
+                        break;
+                    case "add":
+                        Editable = true;
+                        break;
+                    case "edit":
+                        Editable = true;
+                        break;
+                    default: // Внутренняя ошибка приложения
+                        break;
+                }
+            }
+        }
+    }
+    #endregion Параметры страницы
+
+    #region Поля формы редактирования продукта
+    private string _listName = string.Empty;
+    public string ListName
+    {
+        get => _listName;
+        set
+       {
+            if (SetProperty(ref _listName, value))
+            {
+                if (_listName == _shoppingListInfo.Name &&
+                    _listDescription == _shoppingListInfo.Description)
+                {
+                    dataChanged = false;
+                    SaveCommand.NotifyCanExecuteChanged();
+                    CancelCommand.NotifyCanExecuteChanged();
+                }
+                else
+                {
+                    dataChanged = true;
+                    SaveCommand.NotifyCanExecuteChanged();
+                    CancelCommand.NotifyCanExecuteChanged();
+                }
+            }
+        }
+    }
+
+    private string? _listDescription;
+    public string? ListDescription
+    {
+        get => _listDescription;
+        set
+        {
+            if (SetProperty(ref _listDescription, value))
+            {
+                if (_listName == _shoppingListInfo.Name &&
+                    _listDescription == _shoppingListInfo.Description)
+                {
+                    dataChanged = false;
+                    SaveCommand.NotifyCanExecuteChanged();
+                    CancelCommand.NotifyCanExecuteChanged();
+                }
+                else
+                {
+                    dataChanged = true;
+                    SaveCommand.NotifyCanExecuteChanged();
+                    CancelCommand.NotifyCanExecuteChanged();
+                }
+            }
+        }
+    }
+
+    #endregion Поля формы редактирования продукта
+
+    /// <summary>
+    /// Свойство возможности редактирования формы
+    /// </summary>
+    [ObservableProperty]
+    private bool _editable;
+
+    // Признак изменения данные о продукте в форме
+    private bool dataChanged = false;
+
+    #region Кнопки формы страницы
+    [RelayCommand(CanExecute = nameof(IsSaveBtnEnabled))]
+    private async Task SaveAsync()
+    {
+        ShoppingList newList;
+
+        switch (Mode)
+        {
+            case "edit":
+                newList = new ShoppingList
+                {
+                    ListKindId = _shoppingListInfo.ListKindId,
+                    Id = _shoppingListInfo.Id,
+                    Name = _listName,
+                    Description = _listDescription
+                };
+                bool res = dataService.UpdateShoppingList(newList);
+                break;
+            case "add":
+                //newList = new ShoppingList
+                //{
+                //    ListKindId = _shoppingListInfo.ListKindId,
+                //    Id = 0, // Будет установлен при добавлении в хранилище данных
+                //    Name = _listName,
+                //    Description = _listDescription,
+                //};
+                var id = dataService.CreateShoppingList(_listName, _listDescription);
+                break;
+        }
+        await navigationService.NavigateBackAsync();
+    }
+    public bool IsSaveBtnEnabled => dataChanged;
+
+    [RelayCommand(CanExecute = nameof(IsCancelBtnEnabled))]
+    private async Task CancelAsync()
+    {
+        await navigationService.NavigateBackAsync();
+    }
+    public bool IsCancelBtnEnabled => dataChanged;
+    #endregion Кнопки формы страницы
+    public ShoppingListDetailsViewModel(IDataService dataService,
+        INavigationService navigationService, IDialogService dialogService)
+    {
+        this.dataService = dataService;
+        this.navigationService = navigationService;
+        this.dialogService = dialogService;
+    }
+
+}

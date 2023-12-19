@@ -73,4 +73,15 @@ public class NavigationService : INavigationService
         // Один элемент с индексом 0 служебный.
         return Shell.Current.Navigation.NavigationStack.Count > 1;
     }
+
+    public async Task PushModalAsync(Page page)
+    {
+        await Shell.Current.Navigation.PushModalAsync(page);
+    }
+    public async Task PopModalAsync()
+    {
+        await Shell.Current.Navigation.PopModalAsync();
+    }
+
 }
+

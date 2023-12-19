@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ListManager.ViewModels"
-             x:Class="ListManager.Views.ProductDetailsPage"
-             x:DataType="vm:ProductDetailsViewModel"
-             Title="Product Details">
+             x:Class="ListManager.Views.ShoppingListDetailsPage"
+             x:DataType="vm:ShoppingListDetailsViewModel"
+             Title="Shopping List Details">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" IconImageSource="add_white.png"
             Command="{Binding AddItemCommand}" />
@@ -14,7 +14,7 @@
             Command="{Binding DeleteItemCommand}" />
     </ContentPage.ToolbarItems>
     <VerticalStackLayout>
-        <Label Text="Product details information" FontSize="Large"
+        <Label Text="Adding new shopping list header" FontSize="Large"
             VerticalOptions="Center" HorizontalOptions="Center" />
         <Grid ColumnDefinitions="Auto,Auto"
             RowDefinitions="Auto,Auto,Auto,Auto,Auto" 
@@ -22,21 +22,12 @@
             <Label Grid.Column="0" Grid.Row="0" VerticalOptions="Center"
                 Text="Name:" FontAttributes="Bold"/>
             <Entry Grid.Column="1" Grid.Row="0" VerticalOptions="Center"
-                Text="{Binding ProductName}" IsEnabled="{Binding Editable}" 
+                Text="{Binding ListName}" IsEnabled="{Binding Editable}" 
                  Placeholder="Enter product name"/>
             <Label Text="Description:" Grid.Row="1"  FontAttributes="Bold"/>
             <Entry Grid.Column="1" Grid.Row="1" VerticalOptions="Center"
-                Text="{Binding ProductDescription}" IsEnabled="{Binding Editable}"
+                Text="{Binding ListDescription}" IsEnabled="{Binding Editable}"
                 Placeholder="Enter short product description"/>
-            <Label Text="Qty:" Grid.Row="2"  FontAttributes="Bold"/>
-            <Entry Grid.Column="1" Grid.Row="2" VerticalOptions="Center"
-                Text="{Binding ProductQty}" IsEnabled="{Binding Editable}"
-                Placeholder="Enter quantity of product"/>
-            <Label Grid.Column="0" Grid.Row="3" VerticalOptions="Center"
-                Text="Marked:" FontAttributes="Bold"/>
-            <CheckBox Grid.Column="1" Grid.Row="3"
-                IsChecked="{Binding ProductMarked}" IsEnabled="{Binding Editable}"
-                HorizontalOptions="Start" />
             <HorizontalStackLayout Grid.Column="1" Grid.Row="4" Spacing="5" >
                 <Button Text="Save" Command="{Binding SaveCommand}" />
                 <Button Text="Cancel" Command="{Binding CancelCommand}" />

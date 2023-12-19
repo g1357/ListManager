@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using ListManager.Models;
 using ListManager.Services;
+using ListManager.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -64,6 +65,21 @@ public partial class ShoppingListsViewModel : ViewModelBase
     {
         await dialogService.DisplayAlert("Add itrm to List",
             "You will add ityem to list!", "Ok");
+        await navigationService.NavigateToAsync("ShoppingListDetails",
+            new Dictionary<string, object>
+            {
+                { "SelectedShoppingList", new ShoppingList() },
+                { "Mode", "add" }
+            });
+    }
+
+    [RelayCommand]
+    private async Task HelpAsync()
+    {
+        //await dialogService.DisplayAlert("Help",
+        //    "You asked help! The help is comming!", "Ok");
+        var helpPage = Application.Current.MainPage.Handler.MauiContext.Services.GetService<HelpPage>();
+        await navigationService.PushModalAsync(helpPage);
     }
 
     public ShoppingListsViewModel(IDataService dataService,
