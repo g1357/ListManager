@@ -83,6 +83,16 @@ public partial class ShoppingListsViewModel : ViewModelBase
         await navigationService.PushModalAsync(helpPage);
     }
 
+    [RelayCommand]
+    private async Task TapOnceAsync(ShoppingList list)
+    {
+        await dialogService.DisplayAlert("Tap Once Gesture",
+            "You asked help! The help is comming!", "Ok");
+        //var helpPage = Application.Current.MainPage.Handler.MauiContext.Services.GetService<HelpPage>();
+        //var helpPage = ServiceHelper.GetService<HelpPage>();
+        //await navigationService.PushModalAsync(helpPage);
+    }
+
     public ShoppingListsViewModel(IDataService dataService,
         INavigationService navigationService, IDialogService dialogService)
     {
