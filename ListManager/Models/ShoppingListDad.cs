@@ -75,4 +75,14 @@ public partial class ShoppingListDaD : ShoppingList
         this.isBeingDraggedOver = false;
     }
 
+    public ShoppingList Base()
+    {
+        return new ShoppingList
+        {
+            ListKindId = ListKindId,
+            Id = Id,
+            Name = Name,
+            Description = Description
+        };
+    }
 }

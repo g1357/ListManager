@@ -58,6 +58,7 @@ namespace ListManager
             builder.Services.AddPage<VersionPage, VersionViewModel>("Version");
             builder.Services.AddPage<Page1View, Page1ViewModel>("Page1");
             builder.Services.AddPage<Page2View, Page2ViewModel>("Page2");
+            builder.Services.AddPage<ShListPage, ShListViewModel>("ShList");
 
             var app = builder.Build();
             ServiceHelper.Initialize(app.Services);
