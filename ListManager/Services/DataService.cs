@@ -104,7 +104,7 @@ public class DataService : IDataService
     /// <param name="name">наименование списка покупок</param>
     /// <param name="description">Краткое описание списка покупок</param>
     /// <returns>Идентификатор списка покупок</returns>
-    public int CreateShoppingList(string name, string description)
+    public int CreateShoppingList(string name, string? description = null)
     {
         // Создать новый список покупок
         var list = new ShoppingList

@@ -19,8 +19,13 @@ public class DialogService : IDialogService
     /// <returns>нет</returns>
     public Task DisplayAlert(string title, string message, string buttonLabel)
     {
-        // Вызвать соотвествующий метод из экземпляра корневой страницы
-        return Application.Current.MainPage.DisplayAlert(title, message, buttonLabel);
+        Page? mainPage = Application.Current?.MainPage;
+        if (mainPage != null)
+        {
+            // Вызвать соотвествующий метод из экземпляра корневой страницы
+            return mainPage.DisplayAlert(title, message, buttonLabel);
+        }
+        return Task.CompletedTask;
     }
 
     /// <summary>
@@ -35,9 +40,14 @@ public class DialogService : IDialogService
     public Task<bool> DisplayAlert(string title, string message, 
         string acceptLabel, string cancelLabel)
     {
-        // Вызвать соотвествующий метод из экземпляра корневой страницы
-        return Application.Current.MainPage.DisplayAlert(title, message,
+        Page? mainPage = Application.Current?.MainPage;
+        if (mainPage != null)
+        {
+            // Вызвать соотвествующий метод из экземпляра корневой страницы
+            return mainPage.DisplayAlert(title, message,
             acceptLabel, cancelLabel);
+        }
+        return Task.FromResult(false);
     }
 
     /// <summary>
@@ -54,9 +64,14 @@ public class DialogService : IDialogService
     public Task<string> DisplayActionSheet([NotNull] string title, 
         string cancelLabel, string destructionLabel, [NotNull] params string[] buttons)
     {
-        // Вызвать соотвествующий метод из экземпляра корневой страницы
-        return Application.Current.MainPage.DisplayActionSheet(title, 
+        Page? mainPage = Application.Current?.MainPage;
+        if (mainPage != null)
+        {
+            // Вызвать соотвествующий метод из экземпляра корневой страницы
+            return mainPage.DisplayActionSheet(title, 
             cancelLabel, destructionLabel, buttons);
+        }
+        return Task.FromResult(string.Empty);
     }
 
     /// <summary>
@@ -76,10 +91,15 @@ public class DialogService : IDialogService
     public Task<string> DisplayPromptAsync(string title, string message, 
         string acceptLabel = "OK", string cancelLabel = "Cancel", 
         string? placeholder = default, int maxLength = -1, 
-        Microsoft.Maui.Keyboard keyboard = default, string initialValue = "")
+        Microsoft.Maui.Keyboard? keyboard = default, string initialValue = "")
     {
-        // Вызвать соотвествующий метод из экземпляра корневой страницы
-        return Application.Current.MainPage.DisplayPromptAsync(title, message,
+        Page? mainPage = Application.Current?.MainPage;
+        if (mainPage != null)
+        {
+            // Вызвать соотвествующий метод из экземпляра корневой страницы
+            return mainPage.DisplayPromptAsync(title, message,
             acceptLabel, cancelLabel, placeholder, maxLength, keyboard, initialValue);
-    }      
+        }
+        return Task.FromResult(string.Empty);
+    }
 }

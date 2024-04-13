@@ -12,7 +12,7 @@ namespace ListManager.Behaviors;
 public class EventToCommandBehavior : BehaviorBase<View>
 {
     // Обработчик события
-    Delegate eventHandler;
+    Delegate? eventHandler;
 
     // Создать "привязанное" свойство EventName, которое будет содержать имя события
     // к которым связывается команда
@@ -96,7 +96,7 @@ public class EventToCommandBehavior : BehaviorBase<View>
     /// </summary>
     /// <param name="eventName">Имя события</param>
     /// <exception cref="ArgumentException">Ошибка в аргументе</exception>
-    private void RegisterEvent(string eventName)
+    private void RegisterEvent(string? eventName)
     {
         // Если имя события не задано,
         if (string.IsNullOrEmpty(eventName))
@@ -105,7 +105,7 @@ public class EventToCommandBehavior : BehaviorBase<View>
             return;
         }
         // Получить информацию о событии
-        EventInfo? eventInfo = AssociatedObject.GetType().GetRuntimeEvent(eventName);
+        EventInfo? eventInfo = AssociatedObject?.GetType().GetRuntimeEvent(eventName);
         // Если информация о собитии не доступна
         if (eventInfo == null)
         {
@@ -140,7 +140,7 @@ public class EventToCommandBehavior : BehaviorBase<View>
             return;
         }
         // Получить информацию о событии
-        EventInfo? eventInfo = AssociatedObject.GetType().GetRuntimeEvent(eventName);
+        EventInfo? eventInfo = AssociatedObject?.GetType().GetRuntimeEvent(eventName);
         // Если информация о событии отсутсивует,
         if (eventInfo == null)
         {
@@ -158,7 +158,7 @@ public class EventToCommandBehavior : BehaviorBase<View>
     /// </summary>
     /// <param name="sender">Истояник возникновения события</param>
     /// <param name="eventArgs">Аргументы события</param>
-    private void OnEvent(object sender, object eventArgs)
+    private void OnEvent(object? sender, object eventArgs)
     {
         // Если команда не задана,
         if (Command == null)

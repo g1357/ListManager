@@ -60,7 +60,7 @@ public interface IDialogService
     /// <returns></returns>
     public Task<string> DisplayPromptAsync(string title, string message,
         string acceptLabel = "OK", string cancelLabel = "Cancel",
-        string placeholder = default, int maxLength = -1,
-        Microsoft.Maui.Keyboard keyboard = default, string initialValue = "");
+        string? placeholder = default, int maxLength = -1,
+        Microsoft.Maui.Keyboard? keyboard = default, string initialValue = "");
 
 }

@@ -14,11 +14,14 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Refresh" IconImageSource="refresh.svg"
+        <ToolbarItem Text="Refresh"
+            IconImageSource="{FontImage &#xF0450;, FontFamily=MaterialDesignIcons}"
             Command="{Binding RefreshListCommand}"/>
-        <ToolbarItem Text="Add" IconImageSource="add.svg"
+        <ToolbarItem Text="Add" 
+            IconImageSource="{FontImage &#xF0415;, FontFamily=MaterialDesignIcons}"
             Command="{Binding AddItemCommand}"/>
-        <ToolbarItem Text="Help" IconImageSource="question_mark_30.png"
+        <ToolbarItem Text="Help"
+            IconImageSource="{FontImage &#xF0625;, FontFamily=MaterialDesignIcons}"
             Command="{Binding HelpCommand}"/>
 
     </ContentPage.ToolbarItems>
@@ -39,87 +42,67 @@
                 IsRefreshing="{Binding RefreshingFlag}" Grid.Row="1">
 
                 <CollectionView x:Name="collectionView"
-                    ItemsSource="{Binding ShoppingLists}"
-                >
-                    <!--
-                    SelectedItem="{Binding SelectedItem}" SelectionMode="None"
-                    SelectionChangedCommand="{Binding SelectionChangedCommand}" 
-                    SelectionChangedCommandParameter=
-                        "{Binding Source={x:Reference collectionView}, Path=SelectedItem}"
-                    -->
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:ShoppingList">
-                        <Frame Margin="2" Padding="0"
-                            BorderColor="#bcacdc" CornerRadius="0"
-                            IsClippedToBounds="True" >
-                            <SwipeView>
-                                <Grid RowDefinitions="Auto, Auto"
-                                ColumnDefinitions="Auto,Auto"
-                                Margin="5" >
+                    ItemsSource="{Binding ShoppingLists}" >
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:ShoppingListDaD">
+                            <Frame Margin="2" Padding="0"
+                                BorderColor="#bcacdc" CornerRadius="0"
+                                IsClippedToBounds="True" >
+                                <SwipeView>
+                                    <Grid RowDefinitions="Auto, Auto"
+                                        ColumnDefinitions="Auto,Auto"
+                                        BackgroundColor="{Binding IsBeingDragged, Converter={StaticResource BoolToColor}}"
+                                        Margin="1" >
                                         <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer NumberOfTapsRequired="1"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.TapOnceCommand}"
-                                        CommandParameter="{Binding}" />
                                             <TapGestureRecognizer NumberOfTapsRequired="2"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.TapOnceCommand}"
-                                        CommandParameter="{Binding}" />
+                                                Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.TapTwiceCommand}"
+                                                CommandParameter="{Binding}" />
+                                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                Command="{Binding BindingContext.TapOnceCommand, Source={x:Reference collectionView}}"
+                                                CommandParameter="{Binding}" />
                                             <DragGestureRecognizer CanDrag="True"
-                                        DragStartingCommand="{Binding BindingContext.ItemDraggedCommand, Source={x:Reference collectionView}}"
-                                        DragStartingCommandParameter="{Binding}" />
+                                                DragStartingCommand="{Binding BindingContext.ItemDraggedCommand, Source={x:Reference collectionView}}"
+                                                DragStartingCommandParameter="{Binding}" />
                                             <DropGestureRecognizer AllowDrop="True"
-                                        DragLeaveCommand="{Binding BindingContext.ItemDragLeaveCommand, Source={x:Reference collectionView}}"
-                                        DragLeaveCommandParameter="{Binding}"
-                                        DragOverCommand="{Binding BindingContext.ItemDraggedOverCommand, Source={x:Reference collectionView}}"
-                                        DragOverCommandParameter="{Binding}"
-                                        DropCommand="{Binding BindingContext.ItemDroppedCommand, Source={x:Reference collectionView}}"
-                                        DropCommandParameter="{Binding}" />
+                                                DragLeaveCommand="{Binding BindingContext.ItemDragLeaveCommand, Source={x:Reference collectionView}}"
+                                                DragLeaveCommandParameter="{Binding}"
+                                                DragOverCommand="{Binding BindingContext.ItemDraggedOverCommand, Source={x:Reference collectionView}}"
+                                                DragOverCommandParameter="{Binding}"
+                                                DropCommand="{Binding BindingContext.ItemDroppedCommand, Source={x:Reference collectionView}}"
+                                                DropCommandParameter="{Binding}" />
                                         </Grid.GestureRecognizers>
                                         <!-- List Name -->
                                         <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" />
                                         <!-- List Description -->
                                         <Label Text="{Binding Description}" 
-                                    FontSize="Small" Grid.Row="1" />
+                                            FontSize="Small" Grid.Row="1" />
                                     </Grid>
                                     <SwipeView.LeftItems>
                                         <SwipeItems>
-                                            <SwipeItem Text="Help" 
-                                        IconImageSource="delete.png"
-                                        BackgroundColor="Grey"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
-                                        CommandParameter="{Binding}" />
-                                            <SwipeItem Text="Help" 
-                                        IconImageSource="delete.png"
-                                        BackgroundColor="Grey"
-                                        Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
-                                        CommandParameter="{Binding}" />
+                                            <SwipeItem Text="Delete" 
+                                                IconImageSource="{FontImage &#xF0A7A;, FontFamily=MaterialDesignIcons, Size=10}"
+                                                BackgroundColor="Grey"
+                                                Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
+                                                CommandParameter="{Binding}" />
                                         </SwipeItems>
                                     </SwipeView.LeftItems>
                                     <SwipeView.RightItems>
                                         <SwipeItem Text="Help" 
-                                    IconImageSource="delete.png"
-                                    BackgroundColor="Grey"
-                                    Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
-                                    CommandParameter="{Binding}" />
+                                            IconImageSource="{FontImage &#xF0625;, FontFamily=MaterialDesignIcons}"
+                                            BackgroundColor="Grey"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
+                                            CommandParameter="{Binding}" />
+                                        <SwipeItem Text="Help" 
+                                            IconImageSource="{FontImage &#xF0625;, FontFamily=MaterialDesignIcons}"
+                                            BackgroundColor="Grey"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
+                                            CommandParameter="{Binding}" />
                                     </SwipeView.RightItems>
-                                    <SwipeView.TopItems>
-                                        <SwipeItem Text="Move down" 
-                                    IconImageSource="delete.png"
-                                    BackgroundColor="Grey"
-                                    Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
-                                    CommandParameter="{Binding}" />
-                                    </SwipeView.TopItems>
-                                    <SwipeView.BottomItems>
-                                        <SwipeItem Text="Move up" 
-                                    IconImageSource="delete.png"
-                                    BackgroundColor="Grey"
-                                    Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
-                                    CommandParameter="{Binding}" />
-                                    </SwipeView.BottomItems>
-                                </SwipeView>
+                            </SwipeView>
                             </Frame>
                         </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </RefreshView>
         </Grid>
     </Grid>

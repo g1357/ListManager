@@ -30,7 +30,7 @@ public partial class SettingsViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedItem, value))
             {
-                Preferences.Set("StartPage", _selectedItem.Id);
+                Preferences.Set("StartPage", _selectedItem?.Id ?? 0);
             }
         }
     }

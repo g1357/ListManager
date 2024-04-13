@@ -27,16 +27,16 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
     #endregion Сервисы
 
     #region Параметры страницы
-    private ShoppingList _shoppingListInfo;
-    public ShoppingList ShoppingListInfo
+    private ShoppingList? _shoppingListInfo;
+    public ShoppingList? ShoppingListInfo
     {
         get => _shoppingListInfo;
         set
         {
             if (SetProperty(ref _shoppingListInfo, value))
             {
-                ListName = _shoppingListInfo.Name;
-                ListDescription = _shoppingListInfo.Description;
+                ListName = _shoppingListInfo?.Name ?? string.Empty; 
+                ListDescription = _shoppingListInfo?.Description;
                 dataChanged = false;
                 SaveCommand.NotifyCanExecuteChanged();
                 CancelCommand.NotifyCanExecuteChanged();
@@ -80,7 +80,7 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
        {
             if (SetProperty(ref _listName, value))
             {
-                if (_listName == _shoppingListInfo.Name &&
+                if (_listName == _shoppingListInfo?.Name &&
                     _listDescription == _shoppingListInfo.Description)
                 {
                     dataChanged = false;
@@ -105,7 +105,7 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
         {
             if (SetProperty(ref _listDescription, value))
             {
-                if (_listName == _shoppingListInfo.Name &&
+                if (_listName == _shoppingListInfo?.Name &&
                     _listDescription == _shoppingListInfo.Description)
                 {
                     dataChanged = false;
@@ -144,8 +144,8 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
             case "edit":
                 newList = new ShoppingList
                 {
-                    ListKindId = _shoppingListInfo.ListKindId,
-                    Id = _shoppingListInfo.Id,
+                    ListKindId = _shoppingListInfo?.ListKindId ?? 0,
+                    Id = _shoppingListInfo?.Id ?? 0,
                     Name = _listName,
                     Description = _listDescription
                 };

@@ -21,7 +21,11 @@ public partial class ShoppingListsViewModel : ViewModelBase
     // Сервис диалогов
     private readonly IDialogService dialogService;
 
-    public ObservableCollection<ShoppingList> ShoppingLists { get; set; }
+    /// <summary>
+    /// Список элементов для перетаскивания
+    /// </summary>
+    [ObservableProperty]
+    private ObservableCollection<ShoppingListDaD> shoppingLists;
 
     [ObservableProperty]
     private ShoppingList? selectedItem;
@@ -49,10 +53,10 @@ public partial class ShoppingListsViewModel : ViewModelBase
         RefreshingFlag = true;
 
         var list = dataService.GetShoppingLists();
-        ShoppingLists = new ObservableCollection<ShoppingList>();
+        ShoppingLists = new ObservableCollection<ShoppingListDaD>();
         foreach (var item in list)
         {
-            ShoppingLists.Add(item);
+            ShoppingLists.Add(new ShoppingListDaD(item));
         }
 
         OnPropertyChanged(nameof(ShoppingLists));
@@ -80,13 +84,28 @@ public partial class ShoppingListsViewModel : ViewModelBase
         //    "You asked help! The help is comming!", "Ok");
         //var helpPage = Application.Current.MainPage.Handler.MauiContext.Services.GetService<HelpPage>();
         var helpPage = ServiceHelper.GetService<HelpPage>();
-        await navigationService.PushModalAsync(helpPage);
+        if (helpPage != null)
+        {
+            await navigationService.PushModalAsync(helpPage);
+        }
     }
 
     [RelayCommand]
-    private async Task TapOnceAsync(ShoppingList list)
+    private async Task TapOnceAsync(ShoppingListDaD list)
     {
         await dialogService.DisplayAlert("Tap Once Gesture",
+            "You asked help! The help is comming!", "Ok");
+        await navigationService.NavigateToAsync("ShoppingList",
+            new Dictionary<string, object>
+            {
+                { "SelectedItem", list as ShoppingList }
+            });
+    }
+
+    [RelayCommand]
+    private async Task TapTwiceAsync(ShoppingList list)
+    {
+        await dialogService.DisplayAlert("Tap Twice Gesture",
             "You asked help! The help is comming!", "Ok");
         //var helpPage = Application.Current.MainPage.Handler.MauiContext.Services.GetService<HelpPage>();
         //var helpPage = ServiceHelper.GetService<HelpPage>();
@@ -100,7 +119,7 @@ public partial class ShoppingListsViewModel : ViewModelBase
         this.navigationService = navigationService;
         this.dialogService = dialogService;
 
-        ShoppingLists = new ObservableCollection<ShoppingList>();
+        ShoppingLists = new ObservableCollection<ShoppingListDaD>();
 
         RefreshList();
      }

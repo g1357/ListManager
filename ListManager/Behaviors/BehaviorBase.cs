@@ -13,7 +13,7 @@ public class BehaviorBase<T> : Behavior<T> where T : BindableObject
     /// <summary>
     /// Связанный объъект, к которому привязывается поведение.
     /// </summary>
-    public T AssociatedObject { get; private set; }
+    public T? AssociatedObject { get; private set; }
 
     /// <summary>
     /// Действия при привязке.
@@ -71,6 +71,6 @@ public class BehaviorBase<T> : Behavior<T> where T : BindableObject
         base.OnBindingContextChanged();
         // Переустановить текущий контекст приязки объекта из объекта
         // к которому осуществлена привязка
-        BindingContext = AssociatedObject.BindingContext;
+        BindingContext = AssociatedObject?.BindingContext;
     }
 }

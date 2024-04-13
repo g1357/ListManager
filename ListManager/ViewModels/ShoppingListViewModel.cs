@@ -14,6 +14,7 @@ namespace ListManager.ViewModels;
 /// <summary>
 /// Модель представления списка покупок.
 /// </summary>
+// Переданный параметр: выбранный список покупок
 [QueryProperty(nameof(CurrentShoppingList), "SelectedItem")]
 public partial class ShoppingListViewModel : ViewModelBase
 {
@@ -73,9 +74,9 @@ public partial class ShoppingListViewModel : ViewModelBase
                 newProduct = new Product(item);
                 ProductList.Add(newProduct);
             }
+            OnPropertyChanged(nameof(CurrentShoppingList));
         }
         OnPropertyChanged(nameof(ProductList));
-        OnPropertyChanged(nameof(CurrentShoppingList));
         EditItemCommand.NotifyCanExecuteChanged();
         DeleteItemCommand.NotifyCanExecuteChanged();
         RefreshingFlag = false;
@@ -102,8 +103,8 @@ public partial class ShoppingListViewModel : ViewModelBase
     {
         if (product == null) return;
 
-        //await dialogService.DisplayAlert("Chacked Changed item",
-        //    $"{product.Name} ({product.Description}) value: {product.Marked}", "Ok");
+        await dialogService.DisplayAlert("Chacked Changed item",
+            $"{product.Name} ({product.Description}) value: {product.Marked}", "Ok");
         dataService.UpdateProduct(product);
     }
 
@@ -115,7 +116,7 @@ public partial class ShoppingListViewModel : ViewModelBase
         await navigationService.NavigateToAsync("ProductDetails",
             new Dictionary<string, object>
             {
-                { "SelectedProduct", new Product{ ListId = CurrentShoppingList.Id } },
+                { "SelectedProduct", new Product{ ListId = CurrentShoppingList?.Id ?? 0 } },
                 { "Mode", "add" }
             });
     }

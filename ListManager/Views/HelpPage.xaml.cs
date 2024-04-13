@@ -6,9 +6,9 @@ public partial class HelpPage : ContentPage
 {
 	HelpViewModel viewModel;
 
-    public HelpPage()
-    {
-    }
+    //public HelpPage()
+    //{
+    //}
 
     public HelpPage(HelpViewModel viewModel)
 	{

@@ -39,7 +39,7 @@ public partial class TaskListViewModel : ViewModelBase
 
         await dialogService.DisplayAlert("The \"Completed\" marker has been changed",
             $"The task: {taskManager.Name} is completed!", "Ok");
-        ///dataService.UpdateTask(taskManager);
+        //dataService.UpdateTask(taskManager);
 
     }
 

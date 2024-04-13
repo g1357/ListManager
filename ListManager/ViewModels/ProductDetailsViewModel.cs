@@ -34,10 +34,10 @@ public partial class ProductDetailsViewModel : ViewModelBase
         {
             if (SetProperty(ref _productInfo, value))
             {
-                ProductName = _productInfo.Name;
-                ProductDescription = _productInfo.Description;
-                ProductQty = _productInfo.Qty;
-                ProductMarked = _productInfo.Marked;
+                ProductName = _productInfo?.Name;
+                ProductDescription = _productInfo?.Description;
+                ProductQty = _productInfo?.Qty ?? 0;
+                ProductMarked = _productInfo?.Marked ?? false;
                 dataChanged = false;
                 SaveCommand.NotifyCanExecuteChanged();
                 CancelCommand.NotifyCanExecuteChanged();
@@ -204,8 +204,8 @@ public partial class ProductDetailsViewModel : ViewModelBase
             case "edit":
                 newProduct = new Product
                 {
-                    ListId = _productInfo.ListId,
-                    Id = _productInfo.Id,
+                    ListId = _productInfo?.ListId ?? 0,
+                    Id = _productInfo?.Id ?? 0,
                     Name = _productName,
                     Description = _productDescription,
                     Qty = _productQty,
@@ -216,7 +216,7 @@ public partial class ProductDetailsViewModel : ViewModelBase
             case "add":
                 newProduct = new Product
                 {
-                    ListId = _productInfo.ListId,
+                    ListId = _productInfo?.ListId ?? 0,
                     Id = 0, // Будет установлен при добавлении в хранилище данных
                     Name = _productName,
                     Description = _productDescription,
