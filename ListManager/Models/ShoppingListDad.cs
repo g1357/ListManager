@@ -13,7 +13,7 @@ namespace ListManager.Models;
 /// </summary>
 public partial class ShoppingListDaD : ShoppingList
 {
-    /*
+    /* Свойства, определённые в коассе Shopping List
     /// <summary>
     /// Идентификатор вида списка.
     /// Должен соответствовать одному из идентификаторов вида списка.
@@ -38,8 +38,8 @@ public partial class ShoppingListDaD : ShoppingList
     /// </summary>
     [ObservableProperty]
     private string? description = string.Empty;
-
     */
+
     // Дополнительные свойства для реализации операций перетаскивания
     // (Drag and Drop)
 
@@ -55,8 +55,7 @@ public partial class ShoppingListDaD : ShoppingList
     [ObservableProperty]
     public bool isBeingDraggedOver;
 
-
-    public ShoppingListDaD(int listKindId, int id, string name, string description)
+    public ShoppingListDaD(int listKindId, int id, string name, string? description = null)
     {
         this.ListKindId = listKindId;
         this.Id = id;
@@ -65,14 +64,10 @@ public partial class ShoppingListDaD : ShoppingList
         this.isBeingDragged = false;
         this.isBeingDraggedOver = false;
     }
-    public ShoppingListDaD(ShoppingList item)
-    {
-        this.ListKindId = item.ListKindId;
-        this.Id = item.Id;
-        this.Name = item.Name;
-        this.Description = item.Description;
-        this.isBeingDragged = false;
-        this.isBeingDraggedOver = false;
+
+    public ShoppingListDaD(ShoppingList item) :
+        this(item.ListKindId, item.Id, item.Name, item.Description)
+    { 
     }
 
     public ShoppingList Base()
