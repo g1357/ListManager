@@ -23,13 +23,11 @@
         <ToolbarItem Text="Help"
             IconImageSource="{FontImage &#xF0625;, FontFamily=MaterialDesignIcons}"
             Command="{Binding HelpCommand}"/>
-
     </ContentPage.ToolbarItems>
+
     <Grid RowDefinitions="Auto,*">
-        <Label Grid.Row="0" 
-            Text="Shopping Lists"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Grid.Row="0" Text="Shopping Lists"
+            VerticalOptions="Center" HorizontalOptions="Center" />
         <Grid RowDefinitions="Auto,*" Grid.Row="1">
             <!-- Message about empty list -->
             <Label Text="There are no shopping lists!" 
@@ -42,13 +40,14 @@
                 IsRefreshing="{Binding RefreshingFlag}" Grid.Row="1">
 
                 <CollectionView x:Name="collectionView"
-                    ItemsSource="{Binding ShoppingLists}" >
+                    ItemsSource="{Binding ShoppingLists}" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:ShoppingListDaD">
                             <Frame Margin="2" Padding="0"
                                 BorderColor="#bcacdc" CornerRadius="0"
                                 IsClippedToBounds="True" >
                                 <SwipeView>
+                                    <Grid>
                                     <Grid RowDefinitions="Auto, Auto"
                                         ColumnDefinitions="Auto,Auto"
                                         BackgroundColor="{Binding IsBeingDragged, Converter={StaticResource BoolToColor}}"
@@ -77,6 +76,11 @@
                                         <Label Text="{Binding Description}" 
                                             FontSize="Small" Grid.Row="1" />
                                     </Grid>
+                                    <!-- Frame for highlighting item dragged over -->
+                                    <Frame BackgroundColor="LightGrey" Opacity="0.4"
+                                        IsVisible="{Binding IsBeingDraggedOver}"
+                                        HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+                                    </Grid>
                                     <SwipeView.LeftItems>
                                         <SwipeItems>
                                             <SwipeItem Text="Delete" 
@@ -98,7 +102,7 @@
                                             Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
                                             CommandParameter="{Binding}" />
                                     </SwipeView.RightItems>
-                            </SwipeView>
+                                </SwipeView>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
