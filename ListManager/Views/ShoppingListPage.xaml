@@ -4,12 +4,19 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:model="clr-namespace:ListManager.Models"
              xmlns:vm="clr-namespace:ListManager.ViewModels"
+             xmlns:converter="clr-namespace:ListManager.Converters"
              x:Class="ListManager.Views.ShoppingListPage"
              x:Name="ShoppingListContainer"
              x:DataType="vm:ShoppingListViewModel"
              Title="Shopping List">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolToColorConverter x:Key="BoolToColor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" IconImageSource="add_white.png"
+        <ToolbarItem Text="Add"
+            IconImageSource="{FontImage &#xF0415;, FontFamily=MaterialDesignIcons}"
             Command="{Binding AddItemCommand}" />
         <ToolbarItem Text="Edit" IconImageSource="edit_white.png"
             Command="{Binding EditItemCommand}" />
@@ -27,34 +34,61 @@
         <RefreshView Command="{Binding RefreshListCommand}" Grid.Row="2"
                 IsRefreshing="{Binding RefreshingFlag}" >
             <CollectionView ItemsSource="{Binding ProductList}"
-                SelectedItem="{Binding SelectedItem, Mode=TwoWay}" SelectionMode="Single"
-                x:Name="collectionView" 
-                SelectionChangedCommand="{Binding SelectionChangedCommand}" 
-                SelectionChangedCommandParameter=
-                    "{Binding Source={x:Reference collectionView}, Path=SelectedItem}">
+                SelectionMode="None"
+                x:Name="collectionView" >
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Product">
-                        <Grid RowDefinitions="Auto, Auto"
-                            ColumnDefinitions="Auto,*,Auto"
-                            Margin="5" >
-                            <CheckBox IsChecked="{Binding Marked, Mode=TwoWay}" Grid.RowSpan="2" >
-                                <CheckBox.Behaviors>
-                                    <toolkit:EventToCommandBehavior EventName="CheckedChanged"
-                                        Command="{Binding Source={x:Reference ShoppingListContainer}, Path=BindingContext.CheckedChangedCommand}"
-                                        CommandParameter="{Binding .}" />
-                                </CheckBox.Behaviors>
-                            </CheckBox>
-                            <Label Text="{Binding Name}" Grid.Column="1"
-                               FontSize="Medium" FontAttributes="Bold" />
-                            <Label Text="{Binding Qty, StringFormat='Qty: {0} '}" Grid.Column="2" 
-                               FontSize="Small" FontAttributes="Bold" HorizontalOptions="Center"/>
-                            <Label Text="{Binding Description}" Grid.Column="1" Grid.Row="1" 
-                                TextColor="DarkGrey" FontSize="Small" />
-                        </Grid>
+                    <DataTemplate x:DataType="model:ProductDaD">
+                        <Frame Margin="2" Padding="0"
+                            BorderColor="#bcacdc" CornerRadius="0"
+                            IsClippedToBounds="True" >
+                            <SwipeView>
+                                <Grid>
+                                    <Grid RowDefinitions="Auto, Auto"
+                                        ColumnDefinitions="Auto,*,Auto"
+                                        BackgroundColor="{Binding IsBeingDragged, Converter={StaticResource BoolToColor}}"
+                                        Margin="5" >
+                                        <CheckBox IsChecked="{Binding Marked, Mode=TwoWay}" Grid.RowSpan="2" >
+                                            <CheckBox.Behaviors>
+                                                <toolkit:EventToCommandBehavior EventName="CheckedChanged"
+                                                    Command="{Binding Source={x:Reference ShoppingListContainer}, Path=BindingContext.CheckedChangedCommand}"
+                                                    CommandParameter="{Binding .}" />
+                                            </CheckBox.Behaviors>
+                                        </CheckBox>
+                                        <Label Text="{Binding Name}" Grid.Column="1"
+                                           FontSize="Medium" FontAttributes="Bold" />
+                                        <Label Text="{Binding Qty, StringFormat='Qty: {0} '}" Grid.Column="2" 
+                                           FontSize="Small" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        <Label Text="{Binding Description}" Grid.Column="1" Grid.Row="1" 
+                                            TextColor="DarkGrey" FontSize="Small" />
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="2"
+                                                Command="{Binding BindingContext.TapTwiceCommand, Source={x:Reference collectionView}}"
+                                                CommandParameter="{Binding}" />
+                                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                Command="{Binding BindingContext.TapOnceCommand, Source={x:Reference collectionView}}"
+                                                CommandParameter="{Binding}" />
+                                            <DragGestureRecognizer CanDrag="True"
+                                                DragStartingCommand="{Binding BindingContext.ItemDraggedCommand, Source={x:Reference collectionView}}"
+                                                DragStartingCommandParameter="{Binding}" />
+                                            <DropGestureRecognizer AllowDrop="True"
+                                                DragLeaveCommand="{Binding BindingContext.ItemDragLeaveCommand, Source={x:Reference collectionView}}"
+                                                DragLeaveCommandParameter="{Binding}"
+                                                DragOverCommand="{Binding BindingContext.ItemDraggedOverCommand, Source={x:Reference collectionView}}"
+                                                DragOverCommandParameter="{Binding}"
+                                                DropCommand="{Binding BindingContext.ItemDroppedCommand, Source={x:Reference collectionView}}"
+                                                DropCommandParameter="{Binding}" />
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                    <Frame BackgroundColor="LightGrey" Opacity="0.4"
+                                        IsVisible="{Binding IsBeingDraggedOver}"
+                                        HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+                                </Grid>
+                            </SwipeView>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-
+        <Label Text="{Binding Message}" Grid.Row="3" HorizontalOptions="Center"/>
     </Grid>
 </ContentPage>
