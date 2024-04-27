@@ -36,6 +36,8 @@ namespace ListManager
                 AppLifecycle.AddAndroid(android => android
                     .OnDestroy((activity) => Android_OnDestroy())
                     .OnStop((activity) => Android_OnStop())
+                    .OnSaveInstanceState((activity, del) => Android_OnSaveInstanceState())
+                    .OnPause((activity) => Android_OnPause())
                     );
 #endif
             });
@@ -59,6 +61,7 @@ namespace ListManager
             builder.Services.AddPage<Page1View, Page1ViewModel>("Page1");
             builder.Services.AddPage<Page2View, Page2ViewModel>("Page2");
             builder.Services.AddPage<ShListPage, ShListViewModel>("ShList");
+            builder.Services.AddPage<AppShell, AppShellViewModel>("AppShell");
 
             var app = builder.Build();
             ServiceHelper.Initialize(app.Services);
@@ -95,6 +98,18 @@ namespace ListManager
         }
         static void Android_OnStop()
         {
+            var m = System.Reflection.MethodBase.GetCurrentMethod();
+            Debug.WriteLine($"===== Method : {m?.Name} of Class: {m?.DeclaringType?.Name}");
+        }
+        static void Android_OnSaveInstanceState()
+        {
+            var m = System.Reflection.MethodBase.GetCurrentMethod();
+            Debug.WriteLine($"===== Method : {m?.Name} of Class: {m?.DeclaringType?.Name}");
+        }
+        static async void Android_OnPause()
+        {
+            var dataService = ServiceHelper.GetService<IDataService>();
+            await dataService.SaveData();
             var m = System.Reflection.MethodBase.GetCurrentMethod();
             Debug.WriteLine($"===== Method : {m?.Name} of Class: {m?.DeclaringType?.Name}");
         }

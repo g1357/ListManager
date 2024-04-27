@@ -4,7 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:ListManager.Views"
+    xmlns:vm="clr-namespace:ListManager.ViewModels"
     x:Name="App_Shell"
+    x:DataType="vm:AppShellViewModel"
     Shell.FlyoutBehavior="Flyout">
 
     <ShellContent Title="Home" Icon="home.png" x:Name="StartPage"
@@ -13,10 +15,15 @@
         ContentTemplate="{DataTemplate views:ShoppingListsPage}" />
     <ShellContent Title="Task List" Icon="task_list.png"
         ContentTemplate="{DataTemplate views:TaskListPage}" />
+    <!--
     <ShellContent 
         Title="Home3"
         ContentTemplate="{DataTemplate views:MainPage}"
         Route="Home3"/>
+    -->
     <ShellContent Title="Settings" Icon="setting.png"
         ContentTemplate="{DataTemplate views:SettingsPage}" />
+    <MenuItem Text="Exit"
+        IconImageSource="{FontImage &#xF0A48;, FontFamily=MaterialDesignIcons, Color=Black}"
+        Command="{Binding ExitCommand}"  />
 </Shell>
