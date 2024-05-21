@@ -134,6 +134,28 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
     private bool dataChanged = false;
 
     #region Кнопки формы страницы
+
+    [RelayCommand]
+    private async Task AddItemAsync()
+    {
+        await dialogService.DisplayAlert("Add Item",
+            "Add Item Button is clicked!", "Ok");
+    }
+
+    [RelayCommand]
+    private async Task EditItemAsync()
+    {
+        await dialogService.DisplayAlert("Edit Item",
+            "Edit Item Button is clicked!", "Ok");
+    }
+
+    [RelayCommand]
+    private async Task DeleteItemAsync()
+    {
+        await dialogService.DisplayAlert("Delete Item",
+            "Delete Item Button is clicked!", "Ok");
+    }
+
     [RelayCommand(CanExecute = nameof(IsSaveBtnEnabled))]
     private async Task SaveAsync()
     {

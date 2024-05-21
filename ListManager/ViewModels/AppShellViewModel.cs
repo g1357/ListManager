@@ -19,8 +19,8 @@ public partial class AppShellViewModel : ViewModelBase
     [RelayCommand]
     private async Task ExitAsync()
     {
-        var answer = await dialogService.DisplayAlert("Exit fom Applicatiom",
-            "Are yoy really wants exit fronm application?", "Yes", "No");
+        var answer = await dialogService.DisplayAlert("Exit the Applicatiom",
+            "Do you sure you want to exit the application?", "Yes", "No");
         if (answer)
         {
             await dataService.SaveData();
