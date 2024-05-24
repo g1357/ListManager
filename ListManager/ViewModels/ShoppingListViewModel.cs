@@ -71,12 +71,12 @@ public partial class ShoppingListViewModel : ViewModelBase
     private string message;
 
     [ObservableProperty]
-    private bool _refreshingFlag = true;
+    private bool _refreshingFlag = false;
 
     [RelayCommand]
     private void RefreshList()
     {
-        RefreshingFlag = true;
+        //RefreshingFlag = true;
         if (CurrentShoppingList != null)
         {
             var list = dataService.GetProductList(CurrentShoppingList.Id);
@@ -86,13 +86,14 @@ public partial class ShoppingListViewModel : ViewModelBase
             {
                 newProduct = new ProductDaD(item);
                 ProductList.Add(newProduct);
+                //Task.Delay(1000);
             }
             OnPropertyChanged(nameof(CurrentShoppingList));
         }
         OnPropertyChanged(nameof(ProductList));
         EditItemCommand.NotifyCanExecuteChanged();
         DeleteItemCommand.NotifyCanExecuteChanged();
-        RefreshingFlag = false;
+        //RefreshingFlag = false;
         return;
     }
 

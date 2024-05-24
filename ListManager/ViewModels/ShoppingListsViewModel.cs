@@ -49,12 +49,12 @@ public partial class ShoppingListsViewModel : ViewModelBase
     }
 
     [ObservableProperty]
-    private bool _refreshingFlag = true;
+    private bool _refreshingFlag = false;
 
     [RelayCommand]
     private void RefreshList()
     {
-        RefreshingFlag = true;
+        //RefreshingFlag = true;
 
         var list = dataService.GetShoppingLists();
         ShoppingLists = new ObservableCollection<ShoppingListDaD>();
@@ -64,15 +64,15 @@ public partial class ShoppingListsViewModel : ViewModelBase
         }
 
         OnPropertyChanged(nameof(ShoppingLists));
-        RefreshingFlag = false;
+        //RefreshingFlag = false;
         return;
     }
 
     [RelayCommand]
     private async Task AddItemAsync()
     {
-        await dialogService.DisplayAlert("Add itrm to List",
-            "You will add ityem to list!", "Ok");
+        await dialogService.DisplayAlert("Add item to List",
+            "You will add item to list!", "Ok");
         await navigationService.NavigateToAsync("ShoppingListDetails",
             new Dictionary<string, object>
             {
@@ -232,7 +232,7 @@ public partial class ShoppingListsViewModel : ViewModelBase
 
         ShoppingLists = new ObservableCollection<ShoppingListDaD>();
 
-        RefreshList();
+        //RefreshList();
      }
 
     internal void OnAppearing()

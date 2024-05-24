@@ -128,4 +128,6 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadGenericExceptionInfoBarListManagerHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+
 </Project>

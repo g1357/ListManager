@@ -39,6 +39,11 @@ public class Product : ObservableObject
     public decimal Qty { get; set; }
 
     /// <summary>
+    /// Единица измерения продукта.
+    /// </summary>
+    public string? Unit {  get; set; }
+
+    /// <summary>
     /// Отмечен (куплен)
     /// </summary>
     public bool Marked { get; set; }
@@ -50,6 +55,7 @@ public class Product : ObservableObject
         Name = product.Name;
         Description = product.Description;
         Qty = product.Qty;
+        Unit = product.Unit;
         Marked = product.Marked;
     }
     public Product() { }

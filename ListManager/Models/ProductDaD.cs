@@ -31,6 +31,7 @@ public partial class ProductDaD : Product
         Name = product.Name;
         Description = product.Description;
         Qty = product.Qty;
+        Unit = product.Unit;
         Marked = product.Marked;
         isBeingDragged = false;
         isBeingDraggedOver = false;
@@ -45,6 +46,7 @@ public partial class ProductDaD : Product
             Name = Name,
             Description = Description,
             Qty = Qty,
+            Unit = Unit,
             Marked = Marked
         };
     }

@@ -47,7 +47,7 @@ public class DataService : IDataService
         stampFilePath = Path.Combine(dir, stampFileName);
         
         Data = new DataStore();
-        DataSeed(); 
+        //DataSeed(); 
     }
 
     /// <summary>
@@ -61,14 +61,12 @@ public class DataService : IDataService
             // Создать список типов списков
             Data.ListKinds = new List<ListKind>
             {
-                new ListKind // Создать тип списка: Список покупок
-                {
+                new() {
                     Id = 1,
                     Name = "Список покупок",
                     Description = "Список, содержит товары, которые необходимо купить"
                 },
-                new ListKind // Создать тип списка: Список дел
-                {
+                new() {
                     Id = 2,
                     Name = "Список дел",
                     Description = "Список, содержит текущие дела, которые необходимо сделать"
@@ -244,8 +242,9 @@ public class DataService : IDataService
     /// <param name="name">Наиметование товара</param>
     /// <param name="description">Краткое описание товара</param>
     /// <param name="qty">Количество товара</param>
+    /// <param name="unit">Единица измерения количества товара</param>
     /// <returns>признак успешности добавления товара к списку</returns>
-    public bool AddProduct(int listId, string name, string description, int qty)
+    public bool AddProduct(int listId, string name, string description, int qty, string? unit = null)
     {
         // Создать новый продукт
         var prod = new Product
@@ -255,6 +254,7 @@ public class DataService : IDataService
             Name = name,        // Наименование продукта
             Description = description,  // Краткое описание продукта
             Qty = qty,   // Количество товара
+            Unit = unit,  // Единица измерения количества
             Marked = false  // Отсеченность продукта
         };
         // Добавить продукт в общий список продуктов
@@ -518,37 +518,37 @@ public class DataService : IDataService
         // Создать новый список покупок
         var listId_1 = CreateShoppingList("МЕТРО", "Еженедельные покупки в МЕТРО");
         // Добавить в список товары
-        AddProduct(listId_1, "Кефир", "Кефир Молочная культура в зелёном стаканчике", 4);
-        AddProduct(listId_1, "Масло сливочное", "масло вологодское из Вологды", 2);
-        AddProduct(listId_1, "Сметена 20%", "Домик в деревне", 1);
-        AddProduct(listId_1, "Багет длинный", "Выпечка МЕТРО", 1);
-        AddProduct(listId_1, "Колбава варёная", "В натуральной оболочке, уп.", 1);
-        AddProduct(listId_1, "Помидоры", "Розовые, кг.", 1);
+        AddProduct(listId_1, "Кефир", "Кефир Молочная культура в зелёном стаканчике", 4, "шт.");
+        AddProduct(listId_1, "Масло сливочное", "масло вологодское из Вологды", 2, "пач.");
+        AddProduct(listId_1, "Сметена 20%", "Домик в деревне", 1, "уп.");
+        AddProduct(listId_1, "Багет длинный", "Выпечка МЕТРО", 1, "шт.");
+        AddProduct(listId_1, "Колбава варёная", "В натуральной оболочке, уп.", 1, "шт.");
+        AddProduct(listId_1, "Помидоры", "Розовые, кг.", 1, "кг.");
         // Создать новый список покупок
         var listId_2 = CreateShoppingList("Перекрёсток", "Разовые покупки в Перекрёстке");
         // Добавить в список товары
-        AddProduct(listId_2, "Печенье овсянное", "уп.", 1);
-        AddProduct(listId_2, "Молоко топлёное можайское 4", "бут.", 4);
-        AddProduct(listId_2, "Огурцы свежие", "маленькие, уп.", 2);
-        AddProduct(listId_2, "Блины", "уп.", 1);
+        AddProduct(listId_2, "Печенье овсянное", "уп.", 1, "уп.");
+        AddProduct(listId_2, "Молоко топлёное можайское 4", "бут.", 4, "бут.");
+        AddProduct(listId_2, "Огурцы свежие", "маленькие, уп.", 2, "уп.");
+        AddProduct(listId_2, "Блины", "уп.", 1, "уп");
         AddProduct(listId_2, "Творог", "Жирный, уп.", 1);
-        AddProduct(listId_2, "Хлеб чёрный", "Нарезка, уп.", 1);
+        AddProduct(listId_2, "Хлеб чёрный", "Нарезка, уп.", 1, "шт.");
         // Создать новый список покупок
         var listId_3 = CreateShoppingList("На дачу", "Покупки для дачи");
         // Добавить в список товары
-        AddProduct(listId_3, "Угли", "Упаковка 10 кг., уп.", 1);
-        AddProduct(listId_3, "Рожиг", "Жидкость для розжига парафиновая, бут.", 2);
-        AddProduct(listId_3, "Решётка для гриля", "Большая., шт.", 1);
-        AddProduct(listId_3, "Шашалык", "Свиной., уп.", 2);
-        AddProduct(listId_3, "Вино красное", "Красное сухое вино., бут.", 2);
-        AddProduct(listId_3, "Боржоми", "0.75 л, бут.", 4);
+        AddProduct(listId_3, "Угли", "Упаковка 10 кг., уп.", 1, "пак.");
+        AddProduct(listId_3, "Рожиг", "Жидкость для розжига парафиновая, бут.", 2, "бут.");
+        AddProduct(listId_3, "Решётка для гриля", "Большая., шт.", 1, "шт.");
+        AddProduct(listId_3, "Шашалык", "Свиной., уп.", 2, "Эуп");
+        AddProduct(listId_3, "Вино красное", "Красное сухое вино., бут.", 2, "бут.");
+        AddProduct(listId_3, "Боржоми", "0.75 л,х 6 бут.", 4, "уп.");
         // Создать новый список покупок
         var listId_4 = CreateShoppingList("Крупные", "Крупные покупки");
         // Добавить в список товары
-        AddProduct(listId_4, "Газонокосмлка", "Бензиновая не менее 50 см., самоходная", 1);
-        AddProduct(listId_4, "Речной триммер", "Электрический аккумуляторный с аккумуляторами и зарядным устройством", 4);
-        AddProduct(listId_4, "Насос фикальный", "Лучше Керхер", 1);
-        AddProduct(listId_4, "Шланг к насосу", "20 м.", 1);
+        AddProduct(listId_4, "Газонокосмлка", "Бензиновая не менее 50 см., самоходная", 1, "шт.");
+        AddProduct(listId_4, "Ручной триммер", "Электрический аккумуляторный с аккумуляторами и зарядным устройством", 1, "шт.");
+        AddProduct(listId_4, "Насос фикальный", "Лучше Керхер", 1, "шт.");
+        AddProduct(listId_4, "Шланг к насосу", "20 м.", 1, "шт.");
     }
 
     /// <summary>

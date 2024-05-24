@@ -78,7 +78,7 @@ public interface IDataService
     /// <param name="qty">Количество товара</param>
     /// <returns>признак успешности добавления товара к списку</returns>
     public bool AddProduct(int listId,
-        string name, string description, int qty);
+        string name, string description, int qty, string? unit);
 
     /// <summary>
     /// Добавить товар в список покупок.
