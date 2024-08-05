@@ -108,10 +108,10 @@ namespace ListManager
         }
         static async void Android_OnPause()
         {
-            var dataService = ServiceHelper.GetService<IDataService>();
-            await dataService.SaveData();
             var m = System.Reflection.MethodBase.GetCurrentMethod();
             Debug.WriteLine($"===== Method : {m?.Name} of Class: {m?.DeclaringType?.Name}");
+            var dataService = ServiceHelper.GetService<IDataService>();
+            await dataService.SaveData();
         }
     }
 }

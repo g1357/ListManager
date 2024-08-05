@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 // Пространство имён моделей представления
 namespace ListManager.ViewModels;
@@ -63,5 +64,11 @@ public partial class VersionViewModel :ViewModelBase
     [ObservableProperty]
     private string? _previousBuild = 
         VersionTracking.Default.PreviousBuild ?? "none";
+
+    [RelayCommand]
+    private async Task ShowSettings()
+    {
+        AppInfo.Current.ShowSettingsUI();
+    }
 }
 

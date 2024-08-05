@@ -5,7 +5,7 @@
              x:Class="ListManager.Views.VersionPage"
              x:DataType="vm:VersionViewModel"
              Title="VersionPage">
-    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto" 
+    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto" 
         ColumnDefinitions="auto,auto"  >
         <Label Text="Application Version Information" FontSize="Large" FontAttributes="Bold"
             HorizontalOptions="Center" />
@@ -31,5 +31,9 @@
         <Label Text="{Binding PreviousVersion}" Grid.Row="10" Grid.Column="1" />
         <Label Text="PreviousBuild" Grid.Row="11" Grid.Column="0" />
         <Label Text="{Binding PreviousBuild}" Grid.Row="11" Grid.Column="1" />
+        <StackLayout Orientation="Horizontal" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" 
+            HorizontalOptions="Center">
+            <Button Text="Show Settings" Command="{Binding ShowSettingsCommand}"/>
+        </StackLayout>
     </Grid>
 </ContentPage>
