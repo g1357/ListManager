@@ -54,10 +54,10 @@ public partial class ShoppingListsViewModel : ViewModelBase
     [RelayCommand]
     private void RefreshList()
     {
-        RefreshingFlag = true;
+        //RefreshingFlag = true;
 
         var list = dataService.GetShoppingLists();
-        ShoppingLists = new ObservableCollection<ShoppingListDaD>();
+        ShoppingLists = [];
         foreach (var item in list)
         {
             ShoppingLists.Add(new ShoppingListDaD(item));
@@ -125,11 +125,22 @@ public partial class ShoppingListsViewModel : ViewModelBase
     [RelayCommand]
     private async Task DeleteAsync(ShoppingList list)
     {
-        await dialogService.DisplayAlert("Delete Command",
-            "Delete Command Button Pressed!", "Ok");
+        var result = await dialogService.DisplayAlert("Delete Command",
+            "Delete Command Button Pressed!", "Ok", "Cancel");
         //var helpPage = Application.Current.MainPage.Handler.MauiContext.Services.GetService<HelpPage>();
         //var helpPage = ServiceHelper.GetService<HelpPage>();
         //await navigationService.PushModalAsync(helpPage);
+        if (result)
+        {
+            var res = dataService.DeleteShoppingList(list.Id);
+            if (!res)
+            {
+                await dialogService.DisplayAlert("Delete Shopping List",
+                    "Some problem with Shopping List Deleting!", "Close");
+            }
+            //RefreshList();
+            RefreshingFlag = true;
+        }
     }
 
     /// <summary>
@@ -230,14 +241,15 @@ public partial class ShoppingListsViewModel : ViewModelBase
         this.navigationService = navigationService;
         this.dialogService = dialogService;
 
-        ShoppingLists = new ObservableCollection<ShoppingListDaD>();
+        ShoppingLists = [];
 
-        RefreshList();
+        //RefreshList();
      }
 
     internal void OnAppearing()
     {
-        RefreshList();
+        //RefreshList();
+        RefreshingFlag = true;
     }
 
     internal void OnNavigatedTo()

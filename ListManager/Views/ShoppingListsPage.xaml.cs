@@ -5,7 +5,7 @@ namespace ListManager.Views;
 
 public partial class ShoppingListsPage : ContentPage
 {
-	ShoppingListsViewModel viewModel;
+    readonly ShoppingListsViewModel viewModel;
 	public ShoppingListsPage(ShoppingListsViewModel viewModel)
 	{
         // Выдать отладочное сообщение

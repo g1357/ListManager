@@ -47,8 +47,8 @@ public class DataStore
         TimeStamp = DateTime.Now;
         ShoppingListMaxId = 0;
         ProductMaxId = 0;
-        ListKinds = new List<ListKind>
-        {
+        ListKinds =
+        [
             new ListKind
             {
                 Id = 1,
@@ -61,9 +61,9 @@ public class DataStore
                 Name = "Список дел",
                 Description = "Список, содержит текущие дела, которые необходимо сделать"
             }
-        };
-        ShoppingLists = new List<ShoppingList>();
-        ProductList = new List<Product>();
+        ];
+        ShoppingLists = [];
+        ProductList = [];
 
     }
 }

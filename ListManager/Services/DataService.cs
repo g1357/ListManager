@@ -47,7 +47,7 @@ public class DataService : IDataService
         stampFilePath = Path.Combine(dir, stampFileName);
         
         Data = new DataStore();
-        DataSeed(); 
+        //DataSeed(); 
     }
 
     /// <summary>
@@ -59,8 +59,8 @@ public class DataService : IDataService
         if (Data.ListKinds == null)
         {
             // Создать список типов списков
-            Data.ListKinds = new List<ListKind>
-            {
+            Data.ListKinds =
+            [
                 new ListKind // Создать тип списка: Список покупок
                 {
                     Id = 1,
@@ -73,7 +73,7 @@ public class DataService : IDataService
                     Name = "Список дел",
                     Description = "Список, содержит текущие дела, которые необходимо сделать"
                 }
-            };
+            ];
         }
     }
 
@@ -140,7 +140,7 @@ public class DataService : IDataService
         else
         {
             // Удалить найденный элемент из перечня списков покупок
-            Data.ShoppingLists.Remove(item);
+            bool result = Data.ShoppingLists.Remove(item);
             // Удалить продукты из заданного списка покупок
             ClearShoppingList(listId);
             // Установить признак изменения данных
@@ -210,14 +210,15 @@ public class DataService : IDataService
     {
         // Получить список всех товаров списка покупок с заданным идентификатором
         var list = Data.ProductList.Where(prod => prod.ListId == listId);
+        var prodList = Data.ProductList;
         // Если товары есть, то
         if (list != null)
         {
             // Для каждого элеимента списка
-            foreach (var item in list)
+            foreach (var item in list.ToList())
             {
                 // Удалить элемент из перечня продуктов
-                Data.ProductList.Remove(item);
+                bool result = Data.ProductList.Remove(item);
             }
             // Установить признак изменения данных
             dataChanged = true;
@@ -399,7 +400,7 @@ public class DataService : IDataService
     /// <typeparam name="T">Тип аргументов</typeparam>
     /// <param name="value">Старое значение</param>
     /// <param name="newValue">Новое значение</param>
-    private void UpdateValue<T>(T value, T newValue)
+    private void UpdateValue<T>(ref T value, T newValue)
     {
         // Если значение не задано, то вернуться
         if (value == null) return;
@@ -462,7 +463,7 @@ public class DataService : IDataService
                 // Открыти заданный файл для чтения и создать поток
                 using Stream fileStream = File.OpenRead(dataFilePath);
                 // Создать считыватель потока
-                using StreamReader reader = new StreamReader(fileStream);
+                using StreamReader reader = new(fileStream);
                 // Считать все текстовые данные из файла в строку
                 var json = await reader.ReadToEndAsync();
 
@@ -475,7 +476,7 @@ public class DataService : IDataService
                 // Открыти заданный файл для чтения и создать поток
                 using Stream fileStream = File.OpenRead(dataFilePath);
                 // Создать считыватель потока
-                using StreamReader reader = new StreamReader(fileStream);
+                using StreamReader reader = new(fileStream);
                 // Считать все текстовые данные из файла в строку
                 var json = await reader.ReadToEndAsync();
 

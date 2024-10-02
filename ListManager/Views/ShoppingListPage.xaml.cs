@@ -5,7 +5,7 @@ namespace ListManager.Views;
 
 public partial class ShoppingListPage : ContentPage
 {
-	ShoppingListViewModel viewModel;
+    readonly ShoppingListViewModel viewModel;
 
 	public ShoppingListPage(ShoppingListViewModel viewModel)
 	{

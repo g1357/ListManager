@@ -30,7 +30,8 @@ public partial class ShoppingListViewModel : ViewModelBase
         {
             if (SetProperty(ref _currentShoppingList, value))
             {
-                RefreshList();
+                //RefreshList();
+                RefreshingFlag = true;
             }
         }
     }
@@ -76,7 +77,7 @@ public partial class ShoppingListViewModel : ViewModelBase
     [RelayCommand]
     private void RefreshList()
     {
-        RefreshingFlag = true;
+        //RefreshingFlag = true;
         if (CurrentShoppingList != null)
         {
             var list = dataService.GetProductList(CurrentShoppingList.Id);
@@ -299,7 +300,8 @@ public partial class ShoppingListViewModel : ViewModelBase
 
     public void OnNavigatedTo()
     {
-        RefreshList();
+        //RefreshList();
+        RefreshingFlag = true;
         SelectedItem = null;
     }
 }
