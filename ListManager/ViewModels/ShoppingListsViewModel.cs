@@ -57,7 +57,7 @@ public partial class ShoppingListsViewModel : ViewModelBase
         //RefreshingFlag = true;
 
         var list = dataService.GetShoppingLists();
-        ShoppingLists = new ObservableCollection<ShoppingListDaD>();
+        ShoppingLists = [];
         foreach (var item in list)
         {
             ShoppingLists.Add(new ShoppingListDaD(item));
@@ -230,7 +230,7 @@ public partial class ShoppingListsViewModel : ViewModelBase
         this.navigationService = navigationService;
         this.dialogService = dialogService;
 
-        ShoppingLists = new ObservableCollection<ShoppingListDaD>();
+        ShoppingLists = [];
 
         //RefreshList();
      }

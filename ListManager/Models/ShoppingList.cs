@@ -37,4 +37,10 @@ public partial class ShoppingList : ObservableObject
     /// </summary>
     [ObservableProperty]
     private string? description = string.Empty;
+
+    /// <summary>
+    /// Флаг: Любимый список.
+    /// </summary>
+    [ObservableProperty]
+    private bool favourite = false;
 }
