@@ -25,9 +25,11 @@
                 Text="{Binding ListName}" IsEnabled="{Binding Editable}" 
                  Placeholder="Enter product name"/>
             <Label Text="Description:" Grid.Row="1"  FontAttributes="Bold"/>
-            <Entry Grid.Column="1" Grid.Row="1" VerticalOptions="Center"
+            <Editor Grid.Column="1" Grid.Row="1" HorizontalOptions="Fill"
                 Text="{Binding ListDescription}" IsEnabled="{Binding Editable}"
                 Placeholder="Enter short product description"/>
+            <Label Text="Favourite:" Grid.Row="2"  FontAttributes="Bold"/>
+            <CheckBox IsChecked="{Binding ListFavourite}"  Grid.Row="2" Grid.Column="1"/>
             <HorizontalStackLayout Grid.Column="1" Grid.Row="4" Spacing="5" >
                 <Button Text="Save" Command="{Binding SaveCommand}" />
                 <Button Text="Cancel" Command="{Binding CancelCommand}" />

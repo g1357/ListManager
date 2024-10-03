@@ -106,13 +106,27 @@ public class DataService : IDataService
     /// <returns>Идентификатор списка покупок</returns>
     public int CreateShoppingList(string name, string? description = null)
     {
+        return CreateShoppingList(name, description, false);
+    }
+
+
+    /// <summary>
+    /// Создать список покупок.
+    /// </summary>
+    /// <param name="name">наименование списка покупок</param>
+    /// <param name="description">Краткое описание списка покупок</param>
+    /// <param name="favourite">Флаг любимого списка</param>
+    /// <returns>Идентификатор списка покупок</returns>
+    public int CreateShoppingList(string name, string? description = null, bool favourite = false)
+    {
         // Создать новый список покупок
         var list = new ShoppingList
         {
             ListKindId = 1, // Тип списка: Список покупок
             Id = NextShoppingListId, // Идентификатор списка покупок
             Name = name, // Наименование списка покупок
-            Description = description // Краткое описание списка покупок
+            Description = description, // Краткое описание списка покупок
+            Favourite = favourite // Флаг любимого спичка
         };
         // Добавить список покупок к пепечню списков покупок
         Data.ShoppingLists.Add(list);
@@ -148,6 +162,43 @@ public class DataService : IDataService
             // Вернуть успешность выполнения операции
             return true;
         }
+    }
+
+    /// <summary>
+    /// Удалить список покупок.
+    /// </summary>
+    /// <param name="listId">Идентификатор списка покупок</param>
+    /// <returns>Признак успешности удаления списка покупок</returns>
+    public bool FavToggleShoppingList(int listId)
+    {
+        // Получить список по его идентификатору или null
+        var item = Data.ShoppingLists.FirstOrDefault(x => x.Id == listId);
+        // Если список с заданым идентификатором не найден, то
+        if (item == null)
+        {
+            // Вернуть неуспешное выполнение опрерации
+            return false;
+        }
+        else
+        {
+            item.Favourite = !item.Favourite;
+            dataChanged = true;
+            // Вернуть успешность выполнения операции
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Получить количество продуктов в заданном списке покупок.
+    /// </summary>
+    /// <param name="listId">Идентификатор списка покупок</param>
+    /// <returns>Количенство продуктов в заданномсписке</returns>
+    public int GetProductQty(int listId)
+    {
+        // Получить количество продуктов в список заданномсписке покупок
+        var qty = Data.ProductList.Count(x => x.ListId == listId);
+
+        return qty;
     }
 
     /// <summary>
@@ -193,6 +244,14 @@ public class DataService : IDataService
             {
                 // Установить новове краткое описание
                 item.Description = shoppingList.Description;
+                // Установить признак изменения данных
+                dataChanged = true;
+            }
+            // Если краткое описание изменилось, то
+            if (item.Favourite != shoppingList.Favourite)
+            {
+                // Установить новове краткое описание
+                item.Favourite = shoppingList.Favourite;
                 // Установить признак изменения данных
                 dataChanged = true;
             }
@@ -517,7 +576,7 @@ public class DataService : IDataService
     public void DataSeed()
     {
         // Создать новый список покупок
-        var listId_1 = CreateShoppingList("МЕТРО", "Еженедельные покупки в МЕТРО");
+        var listId_1 = CreateShoppingList("МЕТРО", "Еженедельные покупки в МЕТРО", true);
         // Добавить в список товары
         AddProduct(listId_1, "Кефир", "Кефир Молочная культура в зелёном стаканчике", 4);
         AddProduct(listId_1, "Масло сливочное", "масло вологодское из Вологды", 2);
@@ -535,7 +594,7 @@ public class DataService : IDataService
         AddProduct(listId_2, "Творог", "Жирный, уп.", 1);
         AddProduct(listId_2, "Хлеб чёрный", "Нарезка, уп.", 1);
         // Создать новый список покупок
-        var listId_3 = CreateShoppingList("На дачу", "Покупки для дачи");
+        var listId_3 = CreateShoppingList("На дачу", "Покупки для дачи", true);
         // Добавить в список товары
         AddProduct(listId_3, "Угли", "Упаковка 10 кг., уп.", 1);
         AddProduct(listId_3, "Рожиг", "Жидкость для розжига парафиновая, бут.", 2);

@@ -48,9 +48,15 @@ public partial class ShoppingListsViewModel : ViewModelBase
 
     }
 
+    /// <summary>
+    /// Свойство: флаг обновления
+    /// </summary>
     [ObservableProperty]
     private bool _refreshingFlag = true;
 
+    /// <summary>
+    /// Команда обновления списка
+    /// </summary>
     [RelayCommand]
     private void RefreshList()
     {
@@ -58,9 +64,12 @@ public partial class ShoppingListsViewModel : ViewModelBase
 
         var list = dataService.GetShoppingLists();
         ShoppingLists = [];
+        ShoppingListDaD shList;
         foreach (var item in list)
         {
-            ShoppingLists.Add(new ShoppingListDaD(item));
+            shList = new ShoppingListDaD(item);
+            shList.ProdQty = dataService.GetProductQty(shList.Id);
+            ShoppingLists.Add(shList);
         }
 
         OnPropertyChanged(nameof(ShoppingLists));
@@ -68,6 +77,12 @@ public partial class ShoppingListsViewModel : ViewModelBase
         return;
     }
 
+    /// <summary>
+    /// Команда добавления элемента: списка покупок.
+    /// Создаёт новый список покупок, позволяет задать его наименование и описание,
+    /// создаёт пустой список продуктов.
+    /// </summary>
+    /// <returns>не возвращает значений</returns>
     [RelayCommand]
     private async Task AddItemAsync()
     {
@@ -81,6 +96,10 @@ public partial class ShoppingListsViewModel : ViewModelBase
             });
     }
 
+    /// <summary>
+    /// Команда показа подсказки.
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task HelpAsync()
     {
@@ -94,6 +113,11 @@ public partial class ShoppingListsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Команда выбора списка покупок одиночным нажатием на него.
+    /// </summary>
+    /// <param name="list">Список покупок</param>
+    /// <returns>не возвращает значений</returns>
     [RelayCommand]
     private async Task TapOnceAsync(ShoppingListDaD list)
     {
@@ -112,6 +136,11 @@ public partial class ShoppingListsViewModel : ViewModelBase
             });
     }
 
+    /// <summary>
+    /// Команда - 
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
     [RelayCommand]
     private async Task TapTwiceAsync(ShoppingList list)
     {
@@ -122,26 +151,93 @@ public partial class ShoppingListsViewModel : ViewModelBase
         //await navigationService.PushModalAsync(helpPage);
     }
 
+    /// <summary>
+    /// Команда: удалить список покупок.
+    /// </summary>
+    /// <param name="list">Удаляемый список покупок</param>
+    /// <returns>не возвращает значений</returns>
     [RelayCommand]
     private async Task DeleteAsync(ShoppingList list)
     {
+        // Подтвердить удаление списка покупок
         var result = await dialogService.DisplayAlert("Delete Command",
             "Delete Command Button Pressed!", "Ok", "Cancel");
-        //var helpPage = Application.Current.MainPage.Handler.MauiContext.Services.GetService<HelpPage>();
-        //var helpPage = ServiceHelper.GetService<HelpPage>();
-        //await navigationService.PushModalAsync(helpPage);
         if (result)
         {
+            // Удалить список покупок по идентификатору
             var res = dataService.DeleteShoppingList(list.Id);
             if (!res)
             {
                 await dialogService.DisplayAlert("Delete Shopping List",
                     "Some problem with Shopping List Deleting!", "Close");
             }
-            //RefreshList();
-            RefreshingFlag = true;
+            // Обновить перегень списков покупок
+            RefreshingFlag = true; // Установка флага вызвает исполнени командв обновления
         }
     }
+
+    /// <summary>
+    /// Переключть звёздочку у списка покупок.
+    /// Выполнение команды изменяет значение звёздочки.
+    /// </summary>
+    /// <param name="list">Список покупок для отметки</param>
+    /// <returns>не возвращает значение</returns>
+    [RelayCommand]
+    private async Task FavouriteAsync(ShoppingList list)
+    {
+        await dialogService.DisplayAlert("Favourite List",
+            "Toggle Favourite List", "Ok");
+        // Переключить звёздочку у списка покупок
+        var res = dataService.FavToggleShoppingList(list.Id);
+        if (!res)
+        {
+            // Сообщить о внутренней ошибке
+            await dialogService.DisplayAlert("Delete Shopping List",
+                "Some problem with Shopping List Deleting!", "Close");
+        }
+        // Обновить перечень списков покупок
+        RefreshingFlag = true; // При установке флага вызывается команда обновления
+    }
+
+    /// <summary>
+    /// Редактировать заголовок списка покупок.
+    /// </summary>
+    /// <param name="list">Список покупок</param>
+    /// <returns>не возвращает значен7ий</returns>
+    [RelayCommand]
+    private async Task EditAsync(ShoppingListDaD list)
+    {
+        // Выдать информационное сообщение
+        await dialogService.DisplayAlert("Edit Shopping List",
+            "Editing the header of shopping list.", "Ok");
+        ShoppingList _list = list.Base();
+        // Перейти на страницу редактирования заголовка списка покупок
+        await navigationService.NavigateToAsync("ShoppingListDetails",
+            new Dictionary<string, object>
+            {
+                { "SelectedShoppingList", _list },
+                { "Mode", "edit" }
+            });
+    }
+
+    /// <returns>не возвращает значение</returns>
+    [RelayCommand]
+    private async Task CopyAsync(ShoppingList list)
+    {
+        await dialogService.DisplayAlert("Favourite List",
+            "Toggle Favourite List", "Ok");
+        // Переключить звёздочку у списка покупок
+        var res = dataService.FavToggleShoppingList(list.Id);
+        if (!res)
+        {
+            // Сообщить о внутренней ошибке
+            await dialogService.DisplayAlert("Delete Shopping List",
+                "Some problem with Shopping List Deleting!", "Close");
+        }
+        // Обновить перечень списков покупок
+        RefreshingFlag = true; // При установке флага вызывается команда обновления
+    }
+
 
     /// <summary>
     /// Перетаскиваемый элемент списка
@@ -249,7 +345,7 @@ public partial class ShoppingListsViewModel : ViewModelBase
     internal void OnAppearing()
     {
         //RefreshList();
-        RefreshingFlag = true;
+        RefreshingFlag = true; // Установка флага инициирует выполнения команды
     }
 
     internal void OnNavigatedTo()

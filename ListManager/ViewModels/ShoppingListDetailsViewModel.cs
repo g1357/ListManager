@@ -37,6 +37,7 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
             {
                 ListName = _shoppingListInfo?.Name ?? string.Empty; 
                 ListDescription = _shoppingListInfo?.Description;
+                ListFavourite = _shoppingListInfo?.Favourite ?? false;
                 dataChanged = false;
                 SaveCommand.NotifyCanExecuteChanged();
                 CancelCommand.NotifyCanExecuteChanged();
@@ -80,19 +81,7 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
        {
             if (SetProperty(ref _listName, value))
             {
-                if (_listName == _shoppingListInfo?.Name &&
-                    _listDescription == _shoppingListInfo.Description)
-                {
-                    dataChanged = false;
-                    SaveCommand.NotifyCanExecuteChanged();
-                    CancelCommand.NotifyCanExecuteChanged();
-                }
-                else
-                {
-                    dataChanged = true;
-                    SaveCommand.NotifyCanExecuteChanged();
-                    CancelCommand.NotifyCanExecuteChanged();
-                }
+                CheckChanges();
             }
         }
     }
@@ -105,20 +94,39 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
         {
             if (SetProperty(ref _listDescription, value))
             {
-                if (_listName == _shoppingListInfo?.Name &&
-                    _listDescription == _shoppingListInfo.Description)
-                {
-                    dataChanged = false;
-                    SaveCommand.NotifyCanExecuteChanged();
-                    CancelCommand.NotifyCanExecuteChanged();
-                }
-                else
-                {
-                    dataChanged = true;
-                    SaveCommand.NotifyCanExecuteChanged();
-                    CancelCommand.NotifyCanExecuteChanged();
-                }
+                CheckChanges();
             }
+        }
+    }
+
+    private bool _listFavourite;
+    public bool ListFavourite
+    {
+        get => _listFavourite;
+        set
+        {
+            if (SetProperty(ref _listFavourite, value))
+            {
+                CheckChanges();
+            }
+        }
+    }
+
+    void CheckChanges()
+    {
+        if (_listName == _shoppingListInfo?.Name &&
+        _listDescription == _shoppingListInfo.Description &&
+        _listFavourite == _shoppingListInfo.Favourite)
+        {
+            dataChanged = false;
+            SaveCommand.NotifyCanExecuteChanged();
+            CancelCommand.NotifyCanExecuteChanged();
+        }
+        else
+        {
+            dataChanged = true;
+            SaveCommand.NotifyCanExecuteChanged();
+            CancelCommand.NotifyCanExecuteChanged();
         }
     }
 
@@ -169,7 +177,8 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
                     ListKindId = _shoppingListInfo?.ListKindId ?? 0,
                     Id = _shoppingListInfo?.Id ?? 0,
                     Name = _listName,
-                    Description = _listDescription
+                    Description = _listDescription,
+                    Favourite = _listFavourite
                 };
                 bool res = dataService.UpdateShoppingList(newList);
                 break;
@@ -181,7 +190,8 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
                 //    Name = _listName,
                 //    Description = _listDescription,
                 //};
-                var id = dataService.CreateShoppingList(_listName, _listDescription);
+                var id = dataService.CreateShoppingList(_listName, _listDescription,
+                    _listFavourite);
                 break;
         }
         await navigationService.NavigateBackAsync();

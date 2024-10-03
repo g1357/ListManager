@@ -55,12 +55,20 @@ public partial class ShoppingListDaD : ShoppingList
     [ObservableProperty]
     public bool isBeingDraggedOver;
 
+    /// <summary>
+    /// Количество продуктов в списке.
+    /// </summary>
+    [ObservableProperty]
+    public int prodQty = 0;
+
+
     public ShoppingListDaD(int listKindId, int id, string name, string? description = null)
     {
         this.ListKindId = listKindId;
         this.Id = id;
         this.Name = name;
         this.Description = description;
+        this.Favourite = false;
         this.isBeingDragged = false;
         this.isBeingDraggedOver = false;
     }
@@ -68,6 +76,7 @@ public partial class ShoppingListDaD : ShoppingList
     public ShoppingListDaD(ShoppingList item) :
         this(item.ListKindId, item.Id, item.Name, item.Description)
     { 
+        this.Favourite = item.Favourite;
     }
 
     public ShoppingList Base()
@@ -77,7 +86,8 @@ public partial class ShoppingListDaD : ShoppingList
             ListKindId = ListKindId,
             Id = Id,
             Name = Name,
-            Description = Description
+            Description = Description,
+            Favourite = Favourite
         };
     }
 }

@@ -49,8 +49,9 @@
                                 <SwipeView>
                                     <Grid>
                                     <Grid RowDefinitions="Auto, Auto"
-                                        ColumnDefinitions="Auto,Auto"
+                                        ColumnDefinitions="*,Auto"
                                         BackgroundColor="{Binding IsBeingDragged, Converter={StaticResource BoolToColor}}"
+                                        Padding="2"
                                         Margin="1" >
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer NumberOfTapsRequired="2"
@@ -70,12 +71,20 @@
                                                 DropCommand="{Binding BindingContext.ItemDroppedCommand, Source={x:Reference collectionView}}"
                                                 DropCommandParameter="{Binding}" />
                                         </Grid.GestureRecognizers>
+                                        <!-- Item Data -->
                                         <!-- List Name -->
                                         <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" />
-                                        <!-- List Description -->
+                                        <!-- Favourite -->
+                                            <Label Text="&#xF04CE;" FontFamily="MaterialDesignIcons" TextColor="#F5A623"
+                                               IsVisible="{Binding Favourite}" HorizontalOptions="End" FontSize="Medium"
+                                               Grid.Column="1"/>
+                                            <!-- List Description -->
                                         <Label Text="{Binding Description}" 
                                             FontSize="Small" Grid.Row="1" />
-                                    </Grid>
+                                        <!-- Products Quantity -->
+                                            <Label Text="{Binding ProdQty}" Grid.Row="1" Grid.Column="1"
+                                                   HorizontalOptions="End"/>
+                                        </Grid>
                                     <!-- Frame for highlighting item dragged over -->
                                     <Frame BackgroundColor="LightGrey" Opacity="0.4"
                                         IsVisible="{Binding IsBeingDraggedOver}"
@@ -91,15 +100,20 @@
                                         </SwipeItems>
                                     </SwipeView.LeftItems>
                                     <SwipeView.RightItems>
-                                        <SwipeItem Text="Help" 
-                                            IconImageSource="{FontImage &#xF0625;, FontFamily=MaterialDesignIcons}"
+                                        <SwipeItem Text="Favourite" 
+                                            IconImageSource="{FontImage &#xF04D2;, FontFamily=MaterialDesignIcons}"
                                             BackgroundColor="Grey"
-                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.FavouriteCommand}"
                                             CommandParameter="{Binding}" />
-                                        <SwipeItem Text="Help" 
-                                            IconImageSource="{FontImage &#xF0625;, FontFamily=MaterialDesignIcons}"
+                                        <SwipeItem Text="Edit" 
+                                            IconImageSource="{FontImage &#xF1782;, FontFamily=MaterialDesignIcons}"
                                             BackgroundColor="Grey"
-                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.EditCommand}"
+                                            CommandParameter="{Binding}" />
+                                        <SwipeItem Text="Copy" 
+                                            IconImageSource="{FontImage &#xF018F;, FontFamily=MaterialDesignIcons}"
+                                            BackgroundColor="Grey"
+                                            Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.CopyCommand}"
                                             CommandParameter="{Binding}" />
                                     </SwipeView.RightItems>
                                 </SwipeView>

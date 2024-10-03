@@ -28,6 +28,15 @@ public interface IDataService
     /// </summary>
     /// <param name="name">наименование списка покупок</param>
     /// <param name="description">Краткое описание списка покупок</param>
+    /// <param name="favourite">Флаг любимого списка</param>
+    /// <returns>Идентификатор списка покупок</returns>
+    public int CreateShoppingList(string name, string description, bool favourite);
+
+    /// <summary>
+    /// Создать список покупок.
+    /// </summary>
+    /// <param name="name">наименование списка покупок</param>
+    /// <param name="description">Краткое описание списка покупок</param>
     /// <returns>Идентификатор списка покупок</returns>
     public int CreateShoppingList(string name, string description);
 
@@ -37,6 +46,20 @@ public interface IDataService
     /// <param name="listId">Идентификатор списка покупок</param>
     /// <returns>Признак успешности удаления списка покупок</returns>
     public bool DeleteShoppingList(int listId);
+
+    /// <summary>
+    /// Удалить список покупок.
+    /// </summary>
+    /// <param name="listId">Идентификатор списка покупок</param>
+    /// <returns>Признак успешности удаления списка покупок</returns>
+    public bool FavToggleShoppingList(int listId);
+
+    /// <summary>
+    /// Получить количество продуктов в заданном списке покупок.
+    /// </summary>
+    /// <param name="listId">Идентификатор списка покупок</param>
+    /// <returns>Количенство продуктов в заданномсписке</returns>
+    public int GetProductQty(int listId);
 
     /// <summary>
     /// Получить данные о заголовке списка покупок.
