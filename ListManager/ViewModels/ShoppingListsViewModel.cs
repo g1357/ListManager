@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ListManager.Models;
+using ListManager.Popups;
 using ListManager.Services;
 using ListManager.Views;
 using System;
@@ -142,13 +143,14 @@ public partial class ShoppingListsViewModel : ViewModelBase
     /// <param name="list"></param>
     /// <returns></returns>
     [RelayCommand]
-    private async Task TapTwiceAsync(ShoppingList list)
+    private async Task TapTwiceAsync(ShoppingListDaD list)
     {
         await dialogService.DisplayAlert("Tap Twice Gesture",
             "You asked help! The help is comming!", "Ok");
         //var helpPage = Application.Current.MainPage.Handler.MauiContext.Services.GetService<HelpPage>();
         //var helpPage = ServiceHelper.GetService<HelpPage>();
         //await navigationService.PushModalAsync(helpPage);
+        await EditAsync(list);
     }
 
     /// <summary>
@@ -222,17 +224,20 @@ public partial class ShoppingListsViewModel : ViewModelBase
 
     /// <returns>не возвращает значение</returns>
     [RelayCommand]
-    private async Task CopyAsync(ShoppingList list)
+    private async Task CopyAsync(ShoppingListDaD list)
     {
-        await dialogService.DisplayAlert("Favourite List",
-            "Toggle Favourite List", "Ok");
-        // Переключить звёздочку у списка покупок
+        await dialogService.DisplayAlert("Copying thr Shopping List",
+            "The Shopping List will be Copied", "Ok");
+
+        object? result = await navigationService.ShowPopupAsync(new EditListHeaderPopup(list));
+
+        // Создать новый список покупок
         var res = dataService.FavToggleShoppingList(list.Id);
         if (!res)
         {
             // Сообщить о внутренней ошибке
-            await dialogService.DisplayAlert("Delete Shopping List",
-                "Some problem with Shopping List Deleting!", "Close");
+            await dialogService.DisplayAlert("Copying thr Shopping List",
+                "Some problem with Shopping List opying!", "Close");
         }
         // Обновить перечень списков покупок
         RefreshingFlag = true; // При установке флага вызывается команда обновления

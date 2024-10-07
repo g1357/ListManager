@@ -116,12 +116,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Popups\EditListHeaderPopup.xaml.cs">
+	    <DependentUpon>EditListHeaderPopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\ProductDetailsPage.xaml.cs">
 	    <DependentUpon>ProductDetailsPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Popups\EditListHeaderPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\HelpPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Views;
+using ListManager.Popups;
 using ListManager.Services;
 using ListManager.ViewModels;
 using ListManager.Views;
@@ -62,6 +64,8 @@ namespace ListManager
             builder.Services.AddPage<Page2View, Page2ViewModel>("Page2");
             builder.Services.AddPage<ShListPage, ShListViewModel>("ShList");
             builder.Services.AddPage<AppShell, AppShellViewModel>("AppShell");
+
+            builder.Services.AddTransientPopup<EditListHeaderPopup, EditListHeaderViewModel>();
 
             var app = builder.Build();
             ServiceHelper.Initialize(app.Services);

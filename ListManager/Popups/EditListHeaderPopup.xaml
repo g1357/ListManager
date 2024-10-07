@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:ListManager.ViewModels"
-             x:Class="ListManager.Views.ShoppingListDetailsPage"
-             x:DataType="vm:ShoppingListDetailsViewModel"
-             Title="Shopping List Details">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" IconImageSource="add_white.png"
-            Command="{Binding AddItemCommand}" />
-        <ToolbarItem Text="Edit" IconImageSource="edit_white.png"
-            Command="{Binding EditItemCommand}" />
-        <ToolbarItem Text="Del" IconImageSource="delete_white.png"
-            Command="{Binding DeleteItemCommand}" />
-    </ContentPage.ToolbarItems>
-    <VerticalStackLayout>
+<toolkit:Popup 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="ListManager.Popups.EditListHeaderPopup"
+    CanBeDismissedByTappingOutsideOfPopup ="false">
+    
+    <VerticalStackLayout WidthRequest="540" HeightRequest="540"
+        Padding="40">
+        <Label Text="This is a very important message! Do you agree?" />
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Button Text="Save" 
+                    Clicked="OnSaveButtonClicked" />
+            <Button Text="Cancel"
+                    Clicked="OnCancelButtonClicked" />
+        </HorizontalStackLayout>
         <Label Text="Adding new shopping list header" FontSize="Large"
             VerticalOptions="Center" HorizontalOptions="Center" />
         <Grid ColumnDefinitions="Auto,*"
@@ -38,4 +39,4 @@
             </HorizontalStackLayout>
         </Grid>
     </VerticalStackLayout>
-</ContentPage>
+</toolkit:Popup>

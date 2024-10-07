@@ -1,4 +1,6 @@
-﻿// Пространство имён сервисов
+﻿using CommunityToolkit.Maui.Views;
+
+// Пространство имён сервисов
 namespace ListManager.Services;
 
 public interface INavigationService
@@ -45,6 +47,8 @@ public interface INavigationService
     /// </summary>
     /// <returns>true, если возврат возможен, иначе - афдыу</returns>
     public bool CanNavigateBack();
+
+    public Task<object?> ShowPopupAsync(Popup popup);
 
     public Task PushModalAsync(Page page);
     public Task PopModalAsync();

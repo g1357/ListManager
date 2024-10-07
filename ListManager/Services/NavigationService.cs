@@ -1,4 +1,6 @@
 ﻿// Пространство имён сервисов
+using CommunityToolkit.Maui.Views;
+
 namespace ListManager.Services;
 
 /// <summary>
@@ -74,6 +76,15 @@ public class NavigationService : INavigationService
         return Shell.Current.Navigation.NavigationStack.Count > 1;
     }
 
+    public Task<object?> ShowPopupAsync(Popup popup)
+    {
+        // В зависимости от наличия параметров выполнить переход.
+        return Shell.Current.ShowPopupAsync(popup);
+    }
+
+
+
+
     public async Task PushModalAsync(Page page)
     {
         await Shell.Current.Navigation.PushModalAsync(page);
@@ -82,6 +93,7 @@ public class NavigationService : INavigationService
     {
         await Shell.Current.Navigation.PopModalAsync();
     }
+
 
 }
 
