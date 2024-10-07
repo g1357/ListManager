@@ -203,8 +203,11 @@ public partial class ShoppingListDetailsViewModel : ViewModelBase
     {
         await navigationService.NavigateBackAsync();
     }
+
     public bool IsCancelBtnEnabled => dataChanged;
+
     #endregion Кнопки формы страницы
+
     public ShoppingListDetailsViewModel(IDataService dataService,
         INavigationService navigationService, IDialogService dialogService)
     {

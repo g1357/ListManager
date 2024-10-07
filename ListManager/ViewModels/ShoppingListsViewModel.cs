@@ -229,11 +229,23 @@ public partial class ShoppingListsViewModel : ViewModelBase
         await dialogService.DisplayAlert("Copying thr Shopping List",
             "The Shopping List will be Copied", "Ok");
 
-        object? result = await navigationService.ShowPopupAsync(new EditListHeaderPopup(list));
+        object? result = await navigationService.ShowPopupAsync(new EditListHeaderPopup(list.Base()));
 
-        // Создать новый список покупок
-        var res = dataService.FavToggleShoppingList(list.Id);
-        if (!res)
+        if (result is ShoppingList shList)
+        {
+            var id = dataService.CreateShoppingList(shList.Name,
+                shList.Description, shList.Favourite);
+            var prodList = dataService.GetProductList(list.Id);
+            bool res;
+            //Product newProduct;
+            foreach (var prod in prodList.ToList())
+            {
+                //newProduct = new Product(prod);
+                prod.ListId = id;
+                res = dataService.AddProduct(prod);
+            }
+        }
+        else
         {
             // Сообщить о внутренней ошибке
             await dialogService.DisplayAlert("Copying thr Shopping List",

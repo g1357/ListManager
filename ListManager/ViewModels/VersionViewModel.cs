@@ -66,9 +66,10 @@ public partial class VersionViewModel :ViewModelBase
         VersionTracking.Default.PreviousBuild ?? "none";
 
     [RelayCommand]
-    private async Task ShowSettings()
+    private void ShowSettings()
     {
         AppInfo.Current.ShowSettingsUI();
+        //return Task.CompletedTask;
     }
 }
 

@@ -5,17 +5,18 @@ namespace ListManager.Popups;
 
 public partial class EditListHeaderPopup : Popup
 {
-    EditListHeaderViewModel viewModel;
-    ShoppingListDaD list;
-	public EditListHeaderPopup()
+    readonly EditListHeaderViewModel viewModel;
+    ShoppingList list;
+	private EditListHeaderPopup()
 	{
-		InitializeComponent();
-	}
 
-    public EditListHeaderPopup(ShoppingListDaD list) : this()
+		InitializeComponent();
+    }
+
+    public EditListHeaderPopup(ShoppingList list) : this()
     {
         this.list = list;
-        BindingContext = viewModel = new EditListHeaderViewModel(list);
+        BindingContext = viewModel = new EditListHeaderViewModel(list, this);
     }
 
     async void OnSaveButtonClicked(object? sender, EventArgs e)

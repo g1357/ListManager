@@ -6,8 +6,9 @@
     x:Class="ListManager.Popups.EditListHeaderPopup"
     CanBeDismissedByTappingOutsideOfPopup ="false">
     
-    <VerticalStackLayout WidthRequest="540" HeightRequest="540"
+    <VerticalStackLayout WidthRequest="360" HeightRequest="360"
         Padding="40">
+        <!--
         <Label Text="This is a very important message! Do you agree?" />
         <HorizontalStackLayout HorizontalOptions="Center">
             <Button Text="Save" 
@@ -15,7 +16,8 @@
             <Button Text="Cancel"
                     Clicked="OnCancelButtonClicked" />
         </HorizontalStackLayout>
-        <Label Text="Adding new shopping list header" FontSize="Large"
+        -->
+        <Label Text="You can change Shppling List information:" FontSize="Large"
             VerticalOptions="Center" HorizontalOptions="Center" />
         <Grid ColumnDefinitions="Auto,*"
             RowDefinitions="Auto,Auto,Auto,Auto,Auto" 

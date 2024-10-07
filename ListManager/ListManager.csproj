@@ -110,7 +110,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Syncfusion.Maui.TreeView" Version="27.1.51" />
 	</ItemGroup>
@@ -158,11 +158,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.91" />
+	  <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.82" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
+	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.82" />
 	</ItemGroup>
 
 </Project>

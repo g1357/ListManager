@@ -294,7 +294,15 @@ public class DataService : IDataService
     public IEnumerable<Product> GetProductList(int listId)
     {
         // Вернуть список всех товаров списка покупок с заданным идентификатором
-        return Data.ProductList.Where(prod => prod.ListId == listId);
+        var list = Data.ProductList.Where(prod => prod.ListId == listId);
+        var newList = new List<Product>();
+        Product newProd;
+        foreach (var prod in list)
+        {
+            newProd = new Product(prod);
+            newList.Add(newProd);
+        }
+        return newList;
     }
 
     /// <summary>
