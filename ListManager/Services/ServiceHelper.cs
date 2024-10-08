@@ -30,7 +30,7 @@ public static class ServiceHelper
         Services = serviceProvider;
     }
 
-    public static T? GetService<T>() => Services.GetService<T>();
+    public static T? GetService<T>() => Services!.GetService<T>();
     // Application.Current.MainPage.Handler.MauiContext.Services.GetService<T>();
 
 }

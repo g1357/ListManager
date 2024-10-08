@@ -30,7 +30,7 @@ public class BoolToColorConverter : IValueConverter
     /// <param name="parameter">Параметер</param>
     /// <param name="culture">Информация о культуре</param>
     /// <returns>Цвет</returns>
-    public object Convert(object value, Type tergetType, object parameter,
+    public object? Convert(object? value, Type tergetType, object? parameter,
         CultureInfo culture)
     {
         var  boolValue = (bool?)value;
@@ -47,7 +47,7 @@ public class BoolToColorConverter : IValueConverter
     /// <param name="parameter">Параметр</param>
     /// <param name="culture">Информация о культуре</param>
     /// <returns>Результат</returns>
-    public object ConvertBack(object value, Type tergetType, object parameter,
+    public object? ConvertBack(object? value, Type tergetType, object? parameter,
         CultureInfo culture)
     {
         // Вернуть входящее значение

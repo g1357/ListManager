@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0;net8.0-maccatalyst;net8.0-ios;net8.0-android34.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-maccatalyst;net8.0-ios;net8.0-android34.0</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.26100.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
@@ -20,7 +20,7 @@
 		<ApplicationIdGuid>67981195-db21-46f4-ada5-4ae75f31be23</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>1.1</ApplicationDisplayVersion>
 		<ApplicationVersion>5</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
@@ -44,18 +44,6 @@
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
-	  <Optimize>False</Optimize>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
-	  <Optimize>False</Optimize>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <Optimize>False</Optimize>
-	</PropertyGroup>
-
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
 	  <Optimize>False</Optimize>
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
@@ -65,6 +53,46 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
 	  <Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34.0|AnyCPU'">
+	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.26100.0|AnyCPU'">
+	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
+	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
+	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.26100.0|AnyCPU'">
+	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
+	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
+	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+	  <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
