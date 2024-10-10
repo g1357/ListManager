@@ -1,20 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:span="clr-namespace:ListManager.Helpers"
              x:Class="ListManager.Views.MainPage">
     <ScrollView>
-        <VerticalStackLayout VerticalOptions="Center"
-            Spacing="25" Padding="30,0">
-            <Image Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200" HorizontalOptions="Center" />
-            <Label Text="Hello, World!" FontSize="32"
+        <VerticalStackLayout Padding="25">
+            <Label FontSize="18" 
                 HorizontalOptions="Center"
-                SemanticProperties.HeadingLevel="Level1" />
-            <Label Text="Welcome to .NET Multi-platform App UI" 
-                FontSize="18"  HorizontalOptions="Center" 
+                HorizontalTextAlignment="Center"
+                SemanticProperties.HeadingLevel="Level1" >
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span>
+                            <Span.Text>
+                    Добро пожаловать
+в приложение управления списками -
+                            </Span.Text>
+                        </Span>
+                        <Span Text="ListManager!" FontAttributes="Bold" />
+                    </FormattedString>
+                </Label.FormattedText>
+             </Label>
+            <Image Source="dotnet_bot.png" Margin="20"
+                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                HeightRequest="100" HorizontalOptions="Center" />
+            <Label FontSize="14" LineBreakMode="WordWrap"
+                   HorizontalTextAlignment="Start" HorizontalOptions="StartAndExpand"
                 SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I" >
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span>
+                            <Span.Text>
+                                ListManager разработано как демонстрационное приложение при работе над книгой с рабочим названием «Многоплатформенное мобильное приложение .NET MAUI: от замысла для магазина приложений». С фрагментами книги можно ознакомится по адресу:
+                            </Span.Text>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <!--
+                        <Span Text="https://gbd.ru/books/maui_app" x:Name="url"
+                            TextColor="Blue" TextDecorations="Underline">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding TapCommand}"
+                                    CommandParameter="{Binding Text,Source={x:Reference url}}"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        -->
+                        <span:HyperlinkSpan Text="https://gbd.ru/books/maui_app"
+                            Url="https://gbd.ru/books/maui_app" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <!--
             <Button Text="{Binding BtnText}" Command="{Binding ClickCommand}" 
                 HorizontalOptions="Center"
                 SemanticProperties.Hint="Counts the number of times you click" />
@@ -25,6 +67,45 @@
             </HorizontalStackLayout>
             <Button Text="Navigate to Page 1" HorizontalOptions="Center"
                 Command="{Binding NavigateCommand}" />
+            -->
+
+            <Label FontSize="14" Margin="0,5,0,5">
+                <Label.Text>
+                    В приложении реализован полный функционал работы со списками покупок и сделана заготовка для работы с иерархическим списком. Другие типы списков могут быть добавлены в будущем.
+                </Label.Text>
+            </Label>
+            <Label FontSize="14" Margin="0,5,0,5">
+                <Label.Text>
+                    Основное предназначение приложение учебное – освоение разработки реального многоплатформенного приложения, но оно достаточно удобно для работы со списками покупок, по крайне мере я им реально пользуюсь при составлении списков покупок. Выход книги ожидается в 2025 году.</Label.Text>
+            </Label>
+            <Label >
+ Если вы хотите видеть в приложении работу с ещё каким-нибудь списками, можете написать мне по адресу: 
+            </Label>
+                <Label HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span>
+                            <Span.Text>
+                                Если вы хотите видеть в приложении работу с ещё каким-нибудь списками, можете написать мне по адресу:
+                            </Span.Text>
+                            </Span>
+                            <span:HyperlinkSpan Text="info@gbd.ru"
+                            Url="mailto:info@gbd.ru" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label TextType="Html" Margin="0,10">
+                <![CDATA[
+А сейчас Вы можете перейти к работе с одному из доступных типов списков:
+<li>Список покупок</li>
+<li>Иерархический список (список задач)</li>
+                    выбрав соответсвующий пукт во всплывающем меню.
+<br/></br>
+Установить вид начальной страницы: эту, список покупок или иерархический список вы можете в настройках приложения.
+               
+                ]]>
+            </Label>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

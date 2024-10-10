@@ -1,4 +1,5 @@
-﻿using ListManager.Services;
+﻿using CommunityToolkit.Mvvm.Input;
+using ListManager.Services;
 using System.Diagnostics;
 using System.Windows.Input;
 
@@ -8,7 +9,7 @@ namespace ListManager.ViewModels;
 /// <summary>
 /// Модель предсьавления главной страницы.
 /// </summary>
-public class MainViewModel : ViewModelBase
+public partial class MainViewModel : ViewModelBase
 {
     // Диалоговый сервис
     private readonly IDialogService dialogService;
@@ -48,6 +49,15 @@ public class MainViewModel : ViewModelBase
             }
         }
     }
+
+    [RelayCommand]
+    private async Task TapAsync(string url)
+    {
+        await dialogService.DisplayAlert("Tap Hyperlink",
+            $"You have tapped hyperlink: {url}!", "Ok");
+        await Launcher.Default.OpenAsync(url);
+    }
+
 
     public ICommand NavigateCommand { get; }
 
